@@ -1,33 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Points from './pages/Points';
+import Coupons from './pages/Coupons';
+import Qr from './components/Qr';
+import Ranking from './pages/Ranking';
+import Notfound from './pages/Notfound';
+
+// 1. "/" : 메인 마이페이지
+// 2. "/category/points" : 포인트 조회페이지
+// 3. "/category/coupons" : 쿠폰 조회페이지
+// 4. "/category/qr" : qr페이지 모달
+// 5. "/category/ranking" : 랭킹 페이지
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/category/points' element={<Points />} />
+        <Route path='/category/coupons' element={<Coupons />} />
+        <Route path='/category/qr' element={<Qr />} />
+        <Route path='/category/ranking' element={<Ranking />} />
+        <Route path='*' element={<Notfound />} />
+      </Routes>
     </>
   )
 }
