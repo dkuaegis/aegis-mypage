@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Points from './pages/Points';
 import Coupons from './pages/Coupons';
-import Qr from './components/Qr';
+import Qr from './pages/Qr';
 import Ranking from './pages/Ranking';
 import Notfound from './pages/Notfound';
 

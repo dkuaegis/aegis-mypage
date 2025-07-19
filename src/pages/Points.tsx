@@ -1,5 +1,14 @@
+import Header from "../components/header";
+
 const Points = () => {
-    return <div>points</div>
+    return (
+        <div>
+            <Header
+                leftChild={"<"}
+                title={"포인트"}
+            />
+        </div>
+    )
 }
 
 export default Points;
