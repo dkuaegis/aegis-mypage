@@ -1,0 +1,47 @@
+.Profile {
+    width: 325px;
+    height: 142px;
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 35px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Profile_img {
+  width: 100px;
+  height: 100px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 15px;
+  margin-right: 35px;
+}
+
+.Profile_img > img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.Profile_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Profile_name {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.Profile_greeting {
+  font-size: 16px;
+  font-weight: 500;
+  color: #7E7E7E;
+}
+
