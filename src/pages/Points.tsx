@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Header from "../components/Header";
 import PointSummary from "../components/PointSummary";
 import TabSelector from "../components/TabSelector";
@@ -46,7 +46,15 @@ const Points: React.FC = () => {
         onSelect={setSelectedTab}
       />
       <div className="points-history-list">
-        <Card />
+        {historyData.map((item) => (
+          <Card
+            key={item.id}
+            type="point"
+            title={item.title}
+            date={item.date}
+            amount={item.amount}
+          />
+        ))}
       </div>
     </div>
   );

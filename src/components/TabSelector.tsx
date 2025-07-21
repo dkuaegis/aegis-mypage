@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../style/TabSelector.css";
 import type { TabSelectorProps } from "../model/TabSelector";
 
