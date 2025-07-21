@@ -26,5 +26,5 @@
 
 .tab-btn:not(.selected):hover,
 .tab-btn.hovered {
-  background: #626262;
+    background: #626262;
 }
