@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import pointshopImg from "../assets/pointshop.png";
 import rankingImg from "../assets/ranking.png";
 import "../style/ActivitySection.css";
 
-const ActivitySection = () => {
+const ActivitySection: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="activity-section">
       <div className="activity-title">나의 활동</div>
@@ -26,7 +29,7 @@ const ActivitySection = () => {
             </span>
           }
           type="ACTIVITY"
-          onClick={() => {}}
+          onClick={() => navigate("/category/ranking")}
         />
       </div>
     </div>

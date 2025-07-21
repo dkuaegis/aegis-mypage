@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import Profile from "../components/Profile";
 import ActivitySection from "../components/ActivitySection";
 import pointImg from '../assets/point.png';
 
-const Home = () => {
+const Home: React.FC = () => {
+    const navigate = useNavigate();
+
     return (
         <div>
             <Header leftChild={"<"} title={"마이"} />
@@ -18,12 +21,12 @@ const Home = () => {
                   </span>
                 }
                 type="POINT"
-                onClick={() => {}}
+                onClick={() => navigate("/category/points")}
               />
             </div>
             <div className="main-button-group">
-              <Button text={"쿠폰함"} type={"MAIN"} onClick={() => {}} />
-              <Button text={"QR코드"} type={"MAIN"} onClick={() => {}} />
+              <Button text={"쿠폰함"} type={"MAIN"} onClick={() => navigate("/category/coupons")} />
+              <Button text={"QR코드"} type={"MAIN"} onClick={() => navigate("/category/qr")} />
             </div>
             <ActivitySection />
         </div>

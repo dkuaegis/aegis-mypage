@@ -1,6 +1,6 @@
 import "../style/Profile.css";
 
-const Profile = () => {
+const Profile: React.FC = () => {
     return (
         <div className="Profile">
             <div className="Profile_img">
@@ -8,10 +8,12 @@ const Profile = () => {
             </div>
             <div className="Profile_info">
                 <div className="Profile_name">임세윤</div>
-                <div className="Profile_greeting">환영합니다!<br />Aegis와 함께해요❤</div>
+                <div className="Profile_greeting">
+                    환영합니다!<br />Aegis와 함께해요❤
+                </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Profile;
