@@ -1,0 +1,53 @@
+.my-rank-card-container {
+  width: 600px;
+  max-width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  position: fixed;
+  bottom: 0;
+  background: #FFFFFF;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.my-rank-info {
+  display: flex;
+  align-items: center;
+}
+
+.my-rank-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-left: 20px;
+  margin-right: 25px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.my-rank-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #7E7E7E;
+  margin: 0 0 4px 0;
+}
+
+.my-rank-number {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.my-rank-score {
+  font-size: 14px;
+  font-weight: 600;
+  color: #626262;
+  background: #F2F3F8;
+  padding: 8px 16px;
+  border-radius: 10px;
+} 
