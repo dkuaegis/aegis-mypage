@@ -1,6 +1,6 @@
-import Header from "../components/header";
+import Header from "../components/Header";
 
-const Ranking = () => {
+const Ranking: React.FC = () => {
     return (
         <div>
             <Header

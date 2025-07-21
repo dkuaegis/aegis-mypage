@@ -1,4 +1,4 @@
-const Qr = () => {
+const Qr: React.FC = () => {
     return <div>qr</div>
 }
 

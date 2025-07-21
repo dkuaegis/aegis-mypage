@@ -1,5 +1,6 @@
-import "../style/header.css"
-import type { HeaderProps } from "../model/header.ts";
+import type { HeaderProps } from "../model/Header";
+import "../style/Header.css"
+
 
 const Header: React.FC<HeaderProps> = ({ title, leftChild}) => {
   return (
