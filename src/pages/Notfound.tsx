@@ -13,7 +13,7 @@ const Notfound = () => {
       <div className="notfound-image">
         <img src={notFoundImage} alt="not found" />
       </div>
-      <Button text={"go to home"} type={"HOME"} onClick={() => navigate("/")} />
+      <Button text={"go to home"} type={"MAIN"} onClick={() => navigate("/")} />
     </div>
   );
 };
