@@ -1,0 +1,41 @@
+import type { QRModalProps } from "../model/QrModal";
+import "../style/QRModal.css";
+import refreshImg from "../assets/refresh.png";
+import closeImg from "../assets/close.png";
+import Button from "../components/Button";
+
+const QRModal: React.FC<QRModalProps> = ({ onClose, qrImageUrl }) => {
+  return (
+    <div className="qr-modal-overlay">
+      <div className="qr-modal">
+        <h2 className="qr-title">입장을 위한 QR코드</h2>
+        <p className="qr-desc">이용하려는 행사에 QR코드로 체크인하세요.</p>
+        <div className="qr-image-wrapper">
+          <img src={qrImageUrl} alt="QR Code" className="qr-image" />
+        </div>
+        <Button
+          type="REFRESH"
+          onClick={() => { /* 새로고침 동작 구현 예정 */ }}
+          text={
+            <>
+              <img src={refreshImg} alt="새로고침" className="qr-btn-icon" />
+              새로 고침
+            </>
+          }
+        />
+      </div>
+      <Button
+        type="CLOSE"
+        onClick={onClose}
+        text={
+          <>
+            <img src={closeImg} alt="닫기" className="qr-btn-icon" />
+            이전 화면으로 돌아가기
+          </>
+        }
+      />
+    </div>
+  );
+};
+
+export default QRModal;
