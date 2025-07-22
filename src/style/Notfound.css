@@ -1,0 +1,27 @@
+.notfound-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.notfound-title {
+    font-size: 48px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.notfound-desc {
+    color: #7E7E7E;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.notfound-image img {
+    width: 310px;
+    height: 310px;
+    margin-bottom: 32px;
+}
