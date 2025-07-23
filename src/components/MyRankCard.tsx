@@ -1,6 +1,6 @@
 import type { MyRankCardProps } from '../model/Ranking';
 import '../style/MyRankCard.css';
-import javaIcon from '../assets/java.png';
+import javaIcon from '../assets/C.png';
 
 const MyRankCard: React.FC<Pick<MyRankCardProps, 'name' | 'rank' | 'score'>> = ({ name, rank, score }) => {
   return (
