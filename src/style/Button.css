@@ -78,3 +78,17 @@
     margin-top: 60px;
     cursor: pointer;
 }
+
+.Button_EDITSAVE {
+    background-color: #000000;
+    width: 152px;
+    height: 50px;
+    color: #FFFFFF;
+
+}
+
+.Button_EDITRETURN {
+    background-color: #DBDBDB;
+    width: 152px;
+    height: 50px;
+}
