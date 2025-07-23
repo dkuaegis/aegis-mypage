@@ -56,3 +56,25 @@
     align-items: center;
     justify-content: center;
 }
+
+.Button_REFRESH {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #7E7E7E;
+    text-decoration: underline;
+    margin-top: 16px;
+    cursor: pointer;
+}
+
+.Button_CLOSE {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #FFFFFF;
+    text-decoration: underline;
+    margin-top: 60px;
+    cursor: pointer;
+}
