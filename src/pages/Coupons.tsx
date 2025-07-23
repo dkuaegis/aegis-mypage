@@ -24,7 +24,7 @@ const Coupons: React.FC = () => {
     }
     return true; // 전체
   });
-
+  
   return (
     <div>
       <Header leftChild={"<"} title={"쿠폰함"} />
