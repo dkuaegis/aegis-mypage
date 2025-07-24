@@ -1,4 +1,4 @@
-import type { QRModalProps } from "../model/QrModal";
+import type { QRModalProps } from "../model/QRModal";
 import "../style/QRModal.css";
 import refreshImg from "../assets/refresh.png";
 import closeImg from "../assets/close.png";
