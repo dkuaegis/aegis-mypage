@@ -46,6 +46,7 @@ const Profile: React.FC = () => {
                     imageOptions={imageOptions}
                     onSelectImage={setSelectedImage}
                     onSave={() => setShowProfileEditModal(false)}
+                    onClose={() => setShowProfileEditModal(false)}
                 />
             )}
         </div>

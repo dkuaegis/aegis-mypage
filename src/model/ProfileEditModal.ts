@@ -3,4 +3,5 @@ export interface ProfileEditModalProps {
   imageOptions: string[];
   onSelectImage: (url: string) => void;
   onSave?: () => void;
+  onClose: () => void;
 }

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import type { ProfileEditModalProps } from "../model/ProfileEditModal";
 import "../style/ProfileEditModal.css";
 import Button from "./Button";
@@ -9,9 +8,9 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   selectedImage,
   imageOptions,
   onSelectImage,
-  onSave
+  onSave,
+  onClose
 }) => {
-  const navigate = useNavigate();
   const totalPages = Math.ceil(imageOptions.length / IMAGES_PER_PAGE);
 
   // 페이지별 이미지 배열
@@ -45,7 +44,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
           ))}
         </div>
         <div className="button-group">
-          <Button text={"나가기"} type={"EDITRETURN"} onClick={() => navigate("/")} />
+          <Button text={"나가기"} type={"EDITRETURN"} onClick={onClose} />
           <Button text={"저장"} type={"EDITSAVE"} onClick={onSave || (() => {})} />
         </div>
       </div>
