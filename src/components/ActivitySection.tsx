@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import pointshopImg from "../assets/pointshop.png";
+import pointshopImg from "../assets/pointShop.png";
 import rankingImg from "../assets/ranking.png";
 import "../style/ActivitySection.css";
 
