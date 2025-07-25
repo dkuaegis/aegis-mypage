@@ -1,6 +1,6 @@
 const API_BASE_URL = "https://dev-api.dkuaegis.org";
 
-export async function ProfileEdit(iconId: string): Promise<void> {
+export async function ProfileEdit(iconkey: string): Promise<void> {
   try {
     const res = await fetch(`${API_BASE_URL}/members/profile-icon`, {
       method: 'PUT',
@@ -9,7 +9,7 @@ export async function ProfileEdit(iconId: string): Promise<void> {
         'Content-Type': 'application/json',
         accept: '*/*',
       },
-      body: JSON.stringify({ profileIcon: iconId }),
+      body: JSON.stringify({ profileIcon: iconkey }),
     });
 
     if (!res.ok) {

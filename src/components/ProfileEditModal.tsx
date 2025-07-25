@@ -1,45 +1,55 @@
+import { useState, useEffect } from "react";
 import type { ProfileEditModalProps } from "../model/ProfileEditModal";
-import "../style/ProfileEditModal.css";
+import { PROFILE_ICONS } from "../constants/ProfileIcons";
+import type { IconKey } from "../constants/ProfileIcons";
 import Button from "./Button";
-import { toIconId } from "../utils/Icon";
-import { ProfileEdit } from "../api/ProfileEdit";
+import "../style/ProfileEditModal.css";
+// import { toIconId } from "../utils/Icon";
+// import { ProfileEdit } from "../api/ProfileEdit";
 
 const IMAGES_PER_PAGE = 8;
 
 const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
-  selectedImage,
-  imageOptions,
-  onSelectImage,
+  selectedKey,
+  imageKeys,
+  onSelectKey,
+  onSave,
   onClose,
 }) => {
+  const [tempKey, setTempKey] = useState<IconKey>(selectedKey);
 
-  const totalPages = Math.ceil(imageOptions.length / IMAGES_PER_PAGE);
+  useEffect(() => {
+    setTempKey(selectedKey);
+  }, [selectedKey]);
+
+  const totalPages = Math.ceil(imageKeys.length / IMAGES_PER_PAGE);
   // 페이지별 이미지 배열
-  const pages = Array.from({ length: totalPages }).map((_, pageIdx) =>
-    imageOptions.slice(pageIdx * IMAGES_PER_PAGE, (pageIdx + 1) * IMAGES_PER_PAGE)
+  const pages = Array.from({ length: totalPages }, (_, i) =>
+    imageKeys.slice(i * IMAGES_PER_PAGE, (i + 1) * IMAGES_PER_PAGE)
   );
 
-  const handleSave = async () => {
-    const iconId = toIconId(selectedImage);
-    await ProfileEdit(iconId);
-    onClose();
+  const handleSave = () => {
+    onSelectKey(tempKey);
+    onSave();
   };
 
   return (
     <div className="profile-modal-overlay">
       <div className="profile-modal">
         <h2 className="profile-title">임세윤님,<br />프로필 이미지를 꾸며보세요</h2>
-        <img src={selectedImage} alt="profile-img" className="profile-current-img" />
+        <img src={PROFILE_ICONS[tempKey]} alt="profile-img" className="profile-current-img" />
         <div className="image-grid">
-          {pages.map((images, pageIdx) => (
+          {pages.map((keys, pageIdx) => (
             <div className="image-page" key={pageIdx}>
-              {images.map((img, idx) => (
+              {keys.map((key) => (
                 <img
-                  key={idx}
-                  src={img}
-                  alt={`Option ${pageIdx * IMAGES_PER_PAGE + idx}`}
-                  className={`profile-option-img ${selectedImage === img ? "selected" : ""}`}
-                  onClick={() => onSelectImage(img)}
+                  key={key}
+                  src={PROFILE_ICONS[key]}
+                  alt={key}
+                  className={`profile-option-img ${
+                    tempKey === key ? "selected" : ""
+                  }`}
+                  onClick={() => setTempKey(key)}
                 />
               ))}
             </div>

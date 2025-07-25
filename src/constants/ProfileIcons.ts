@@ -27,3 +27,7 @@ export const PROFILE_ICONS: Record<string, string> = {
   RUST,
   SWIFT,
 };
+
+export type IconKey = keyof typeof PROFILE_ICONS;
+
+export const ICON_KEYS: IconKey[] = Object.keys(PROFILE_ICONS) as IconKey[];

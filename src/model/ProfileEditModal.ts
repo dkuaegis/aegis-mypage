@@ -1,6 +1,9 @@
+import type { IconKey } from "../constants/ProfileIcons";
+
 export interface ProfileEditModalProps {
-  selectedImage: string;
-  imageOptions: string[];
-  onSelectImage: (url: string) => void;
+  selectedKey: IconKey;
+  imageKeys: IconKey[];
+  onSelectKey: (key: IconKey) => void;
+  onSave: () => void;
   onClose: () => void;
 }
