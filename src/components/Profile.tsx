@@ -1,34 +1,21 @@
 import { useState, useEffect } from "react";
-import { getMyPage } from "../api/mypage";
+import { getMyPage } from "../api/MyPage";
 import "../style/Profile.css";
 import ProfileEditModal from "./ProfileEditModal";
+import { PROFILE_ICONS } from "../constants/profileIcons";
 import editIcon from "../assets/edit.png";
-import C from "../assets/C.png";
-import CPP from "../assets/CPP.png";
-import CSHARP from "../assets/CSHARP.png";
-import DART from "../assets/DART.png";
-import GOLANG from "../assets/GOLANG.png";
-import JS from "../assets/JS.png";
-import JAVA from "../assets/JAVA.png";
-import KOTLIN from "../assets/KOTLIN.png";
-import PHP from "../assets/PHP.png";
-import PYTHON from "../assets/PYTHON.png";
-import RUBY from "../assets/RUBY.png";
-import RUST from "../assets/RUST.png";
-import SWIFT from "../assets/SWIFT.png"
-
-const imageOptions = [C, CPP, CSHARP, DART, GOLANG, JS, JAVA, KOTLIN, PHP, PYTHON, RUBY, RUST, SWIFT];
 
 const Profile: React.FC = () => {
     const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);
     const [showProfileEditModal, setShowProfileEditModal] = useState(false);
-    const [selectedImage, setSelectedImage] = useState(C);
+    const [selectedImage, setSelectedImage] = useState<string>("");
 
     // API 호출
         useEffect(() => {
           (async () => {
             const data = await getMyPage();
             setMypage(data);
+            setSelectedImage(PROFILE_ICONS[data.profileIcon]);
           })();
         }, []);
 
@@ -53,7 +40,7 @@ const Profile: React.FC = () => {
             {showProfileEditModal && (
                 <ProfileEditModal
                     selectedImage={selectedImage}
-                    imageOptions={imageOptions}
+                    imageOptions={Object.values(PROFILE_ICONS)}
                     onSelectImage={setSelectedImage}
                     onSave={() => setShowProfileEditModal(false)}
                     onClose={() => setShowProfileEditModal(false)}

@@ -4,7 +4,7 @@ import PointSummary from "../components/PointSummary";
 import TabSelector from "../components/TabSelector";
 import Card from "../components/Card";
 import EmptyState from "../components/EmptyState";
-import { calculateTotalPoints } from "../utils/pointUtils";
+import { calculateTotalPoints } from "../utils/PointUtils";
 
 const Points: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);

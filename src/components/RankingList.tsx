@@ -1,7 +1,7 @@
 import React from 'react';
 import type { RankingListItemData } from '../model/Ranking';
 import '../style/RankingList.css';
-import javaIcon from '../assets/C.png';
+import javaIcon from '../../public/C.png';
 
 // 더미 데이터
 const dummyRankingData: RankingListItemData[] = [

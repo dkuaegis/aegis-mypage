@@ -1,4 +1,4 @@
-const API_BASE_URL = "";
+const API_BASE_URL = "https://dev-api.dkuaegis.org";
 
 export async function getMyPage() {
   try {
