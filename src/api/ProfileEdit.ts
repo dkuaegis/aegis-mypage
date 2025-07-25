@@ -7,7 +7,7 @@ export async function ProfileEdit(iconId: string): Promise<void> {
       credentials: 'include', // 세션 쿠키 전송
       headers: {
         'Content-Type': 'application/json',
-        accept: 'application/json, application/yaml, application/*+json',
+        accept: '*/*',
       },
       body: JSON.stringify({ profileIcon: iconId }),
     });
