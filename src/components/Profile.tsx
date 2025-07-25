@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getMyPage } from "../api/MyPage";
 import "../style/Profile.css";
 import ProfileEditModal from "./ProfileEditModal";
-import { PROFILE_ICONS } from "../constants/profileIcons";
+import { PROFILE_ICONS } from "../constants/ProfileIcons";
 import editIcon from "../assets/edit.png";
 
 const Profile: React.FC = () => {
@@ -42,7 +42,6 @@ const Profile: React.FC = () => {
                     selectedImage={selectedImage}
                     imageOptions={Object.values(PROFILE_ICONS)}
                     onSelectImage={setSelectedImage}
-                    onSave={() => setShowProfileEditModal(false)}
                     onClose={() => setShowProfileEditModal(false)}
                 />
             )}

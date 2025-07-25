@@ -1,6 +1,7 @@
+import type { MyPageInfo } from "../model/MyPageInfo";
 const API_BASE_URL = "https://dev-api.dkuaegis.org";
 
-export async function getMyPage() {
+export async function getMyPage(): Promise<MyPageInfo> {
   try {
     const res = await fetch(`${API_BASE_URL}/mypage`, {
       method: 'GET',
