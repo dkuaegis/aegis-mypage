@@ -1,6 +1,8 @@
 import type { ProfileEditModalProps } from "../model/ProfileEditModal";
 import "../style/ProfileEditModal.css";
 import Button from "./Button";
+import { toIconId } from "../utils/Icon";
+import { ProfileEdit } from "../api/ProfileEdit";
 
 const IMAGES_PER_PAGE = 8;
 
@@ -8,15 +10,20 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   selectedImage,
   imageOptions,
   onSelectImage,
-  onSave,
-  onClose
+  onClose,
 }) => {
-  const totalPages = Math.ceil(imageOptions.length / IMAGES_PER_PAGE);
 
+  const totalPages = Math.ceil(imageOptions.length / IMAGES_PER_PAGE);
   // 페이지별 이미지 배열
   const pages = Array.from({ length: totalPages }).map((_, pageIdx) =>
     imageOptions.slice(pageIdx * IMAGES_PER_PAGE, (pageIdx + 1) * IMAGES_PER_PAGE)
   );
+
+  const handleSave = async () => {
+    const iconId = toIconId(selectedImage);
+    await ProfileEdit(iconId);
+    onClose();
+  };
 
   return (
     <div className="profile-modal-overlay">
@@ -38,14 +45,9 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
             </div>
           ))}
         </div>
-        <div className="pagination-dots">
-          {Array.from({ length: totalPages }).map((_, idx) => (
-            <span key={idx} />
-          ))}
-        </div>
         <div className="button-group">
           <Button text={"나가기"} type={"EDITRETURN"} onClick={onClose} />
-          <Button text={"저장"} type={"EDITSAVE"} onClick={onSave || (() => {})} />
+          <Button text={"저장"} type={"EDITSAVE"} onClick={handleSave} />
         </div>
       </div>
     </div>
