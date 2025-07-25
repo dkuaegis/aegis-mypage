@@ -11,10 +11,15 @@ export interface RankingListItemData {
   avatar: string;
 }
 
+// 랭킹 리스트 배열
+export interface RankingListProps {
+  items: RankingListItemData[];
+}
+
 // 내 랭킹 카드
 export interface MyRankCardProps {
   name: string;
   rank: number;
   score: number;
   avatar: string;
-} 
+}
