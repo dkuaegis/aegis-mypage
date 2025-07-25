@@ -5,7 +5,7 @@ export async function getMyPage(): Promise<MyPageInfo> {
   try {
     const res = await fetch(`${API_BASE_URL}/mypage`, {
       method: 'GET',
-      credentials: 'include',  // 세션 쿠키를 함께 전송
+      credentials: 'include',  // 세션 쿠키를 전송
       headers: {
         accept: 'application/json'
       },
