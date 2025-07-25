@@ -1,5 +1,6 @@
 import type { RankingInfoProps, RankingListItemData, MyRankCardProps } from "../model/Ranking";
 import { PROFILE_ICONS } from "../constants/ProfileIcons";
+import CIcon from "../../public/C.png"; // 임시로 profileIcon이 null 일 때
 
 const API_BASE_URL = "https://dev-api.dkuaegis.org";
 
@@ -12,7 +13,7 @@ export async function getRankingData(): Promise<{
     method: "GET",
     credentials: "include", // 세션 쿠키 전송
     headers: { 
-        accept: "application/json" 
+        accept: 'application/json', 
     },
   });
 
@@ -45,7 +46,7 @@ export async function getRankingData(): Promise<{
       rank: u.rank,
       name: u.name,
       score: u.totalEarnedPoints,
-      avatar: u.profileIcon ? PROFILE_ICONS[u.profileIcon] : "",
+      avatar: u.profileIcon ? PROFILE_ICONS[u.profileIcon] : CIcon,
     })),
     me: {
       rank: json.me.rank,
