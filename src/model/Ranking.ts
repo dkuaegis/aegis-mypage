@@ -17,4 +17,4 @@ export interface MyRankCardProps {
   rank: number;
   score: number;
   avatar: string;
-} 
+}
