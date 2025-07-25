@@ -9,17 +9,18 @@ export async function issueQRCode(): Promise<string> {
     method: 'POST',
     credentials: 'include', // 세션 쿠키 전송
     headers: {
-    //   'Content-Type': 'application/json',
-      Accept: 'application/json, application/yaml, application/*+json',
+      accept: 'text/plain',
+      'Content-Type': 'text/plain',
     },
-    // body: JSON.stringify({})
+    body: '',
   });
 
+  const raw = await res.text();
+  console.log('QR raw response:', raw);
+
   if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    throw new Error(text || `HTTP ${res.status} ${res.statusText}`);
+    throw new Error(raw || `HTTP ${res.status} ${res.statusText}`);
   }
 
-  const data = (await res.json()) as QRIssueRes;
-  return data.base64;
+  return raw.trim();
 }

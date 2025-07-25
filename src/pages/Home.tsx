@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { issueQRCode } from "../api/QRCode";
 import { getMyPage } from "../api/Mypage";
 import Header from "../components/Header";
 import Button from "../components/Button";
@@ -12,14 +13,26 @@ const Home: React.FC = () => {
     const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);
     const navigate = useNavigate();
     const [showQRModal, setShowQRModal] = useState(false);
+    const [qrUrl, setQrUrl] = useState<string>('');
 
-    // API 호출
+    // 사용자 정보 조회 API 호출
     useEffect(() => {
       (async () => {
         const data = await getMyPage();
         setMypage(data);
       })();
     }, []);
+
+    // QRCode 생성 API 호출
+    const onClickQR = async () => {
+      try {
+        const base64 = await issueQRCode();
+        setQrUrl(`data:image/png;base64,${base64}`);
+        setShowQRModal(true);
+      } catch (e) {
+        console.error('QR 발급 실패:', e);
+      }
+    };
 
     return (
         <div>
@@ -39,15 +52,12 @@ const Home: React.FC = () => {
             </div>
             <div className="main-button-group">
               <Button text={"쿠폰함"} type={"MAIN"} onClick={() => navigate("/category/coupons")} />
-              <Button text={"QR코드"} type={"MAIN"} onClick={() => setShowQRModal(true)} />
+              <Button text={"QR코드"} type={"MAIN"} onClick={onClickQR} />
             </div>
             <ActivitySection />
 
             {showQRModal && (
-              <QRModal
-                onClose={() => setShowQRModal(false)}
-                qrImageUrl="https://dummyimage.com/150x150/cccccc/000000.png&text=QR" // 임시 QR
-              />
+              <QRModal onClose={() => setShowQRModal(false)} qrImageUrl={qrUrl} />
             )}
         </div>
     )

@@ -1,1 +1,0 @@
-export const base64ToDataUrl = (b64: string) => `data:image/png;base64,${b64}`;

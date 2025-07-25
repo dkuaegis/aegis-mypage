@@ -1,4 +1,4 @@
 export interface QRModalProps {
-  onClose: () => void;
   qrImageUrl: string;
+  onClose: () => void;
 }
