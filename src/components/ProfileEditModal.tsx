@@ -4,8 +4,8 @@ import { PROFILE_ICONS } from "../constants/ProfileIcons";
 import type { IconKey } from "../constants/ProfileIcons";
 import Button from "./Button";
 import "../style/ProfileEditModal.css";
+import { ProfileEdit } from "../api/ProfileEdit";
 // import { toIconId } from "../utils/Icon";
-// import { ProfileEdit } from "../api/ProfileEdit";
 
 const IMAGES_PER_PAGE = 8;
 
@@ -13,7 +13,6 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   selectedKey,
   imageKeys,
   onSelectKey,
-  onSave,
   onClose,
 }) => {
   const [tempKey, setTempKey] = useState<IconKey>(selectedKey);
@@ -28,9 +27,14 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
     imageKeys.slice(i * IMAGES_PER_PAGE, (i + 1) * IMAGES_PER_PAGE)
   );
 
-  const handleSave = () => {
-    onSelectKey(tempKey);
-    onSave();
+  const handleSave = async () => {
+   try {
+      await ProfileEdit(tempKey);     
+      onSelectKey(tempKey);         
+      onClose();                
+    } catch (e) {
+      console.error("프로필 아이콘 저장 실패:", e);
+    }
   };
 
   return (

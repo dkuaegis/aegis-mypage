@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getMyPage } from "../api/Mypage";
-import { ProfileEdit } from "../api/ProfileEdit";
 import "../style/Profile.css";
 import ProfileEditModal from "./ProfileEditModal";
 import { PROFILE_ICONS, ICON_KEYS } from "../constants/ProfileIcons";
@@ -23,16 +22,6 @@ const Profile: React.FC = () => {
           })();
         }, []);
 
-    const handleSave = async () => {
-        try {
-        await ProfileEdit(selectedKey);
-        setMypage((prev) => prev ? { ...prev, profileIcon: selectedKey } : prev);
-        setShowProfileEditModal(false);
-        } catch (e) {
-        console.error("프로필 아이콘 저장 실패:", e);
-        }
-    };
-
     return (
         <div className="Profile">
             <div className="profile_img" style={{ position: 'relative' }}>
@@ -53,11 +42,10 @@ const Profile: React.FC = () => {
 
             {showProfileEditModal && (
                 <ProfileEditModal
-                selectedKey={selectedKey}
-                imageKeys={ICON_KEYS}
-                onSelectKey={setSelectedKey}
-                onSave={handleSave}
-                onClose={() => setShowProfileEditModal(false)}
+                    selectedKey={selectedKey}
+                    imageKeys={ICON_KEYS}
+                    onSelectKey={setSelectedKey}
+                    onClose={() => setShowProfileEditModal(false)}
                 />
             )}
         </div>
