@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getMyPage } from "../api/mypage";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import Profile from "../components/Profile";
@@ -8,8 +9,17 @@ import QRModal from "../components/QRModal";
 import pointImg from '../assets/point.png';
 
 const Home: React.FC = () => {
+    const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);
     const navigate = useNavigate();
     const [showQRModal, setShowQRModal] = useState(false);
+
+    // API 호출
+    useEffect(() => {
+      (async () => {
+        const data = await getMyPage();
+        setMypage(data);
+      })();
+    }, []);
 
     return (
         <div>
@@ -20,7 +30,7 @@ const Home: React.FC = () => {
                 text={
                   <span className="point-info">
                     <img src={pointImg} alt="포인트" />
-                    <span className="point-text">3,250</span>
+                    <span className="point-text">{mypage?.pointBalance}</span>
                   </span>
                 }
                 type="POINT"

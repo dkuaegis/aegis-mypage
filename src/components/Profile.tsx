@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getMyPage } from "../api/mypage";
 import "../style/Profile.css";
 import ProfileEditModal from "./ProfileEditModal";
 import editIcon from "../assets/edit.png";
@@ -19,8 +20,17 @@ import SWIFT from "../assets/SWIFT.png"
 const imageOptions = [C, CPP, CSHARP, DART, GOLANG, JS, JAVA, KOTLIN, PHP, PYTHON, RUBY, RUST, SWIFT];
 
 const Profile: React.FC = () => {
+    const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);
     const [showProfileEditModal, setShowProfileEditModal] = useState(false);
     const [selectedImage, setSelectedImage] = useState(C);
+
+    // API 호출
+        useEffect(() => {
+          (async () => {
+            const data = await getMyPage();
+            setMypage(data);
+          })();
+        }, []);
 
     return (
         <div className="Profile">
@@ -34,7 +44,7 @@ const Profile: React.FC = () => {
                 />
             </div>
             <div className="profile_info">
-                <div className="profile_name">임세윤</div>
+                <div className="profile_name">{mypage?.name}</div>
                 <div className="profile_greeting">
                     환영합니다!<br />Aegis와 함께해요❤
                 </div>
