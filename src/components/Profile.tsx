@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getMyPage } from "../api/mypage";
+import { getMyPage } from "../api/Mypage";
 import "../style/Profile.css";
 import ProfileEditModal from "./ProfileEditModal";
 import { PROFILE_ICONS } from "../constants/ProfileIcons";

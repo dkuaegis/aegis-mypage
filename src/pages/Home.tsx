@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getMyPage } from "../api/mypage";
+import { getMyPage } from "../api/Mypage";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import Profile from "../components/Profile";
