@@ -7,6 +7,14 @@ import TabSelector from "../components/TabSelector";
 import Card from "../components/Card";
 import EmptyState from "../components/EmptyState";
 
+const formatDate = (dateStr: string): string => {
+  const d = new Date(dateStr);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}년 ${month}월 ${day}일`;
+};
+
 const Points: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [summary, setSummary] = useState<PointSummaryView | null>(null);
@@ -54,7 +62,7 @@ const Points: React.FC = () => {
                 key={item.pointTransactionId}
                 type="point"
                 title={item.reason}
-                date={item.createdAt}
+                date={formatDate(item.createdAt)}
                 amount={item.signedAmount}
               />
           ))}

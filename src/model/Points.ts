@@ -1,8 +1,8 @@
-export type PointType = 'EARN' | 'USE';
+export type PointType = 'EARN' | 'SPEND';
 
 export interface RawPointTransaction {
   pointTransactionId: number;
-  type: PointType;
+  transactionType: PointType;
   amount: number;
   reason: string;
   createdAt: string;

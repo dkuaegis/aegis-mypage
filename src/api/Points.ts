@@ -37,7 +37,7 @@ export async function getPointSummary(): Promise<PointSummaryView> {
 
   const history: PointTransactionView[] = list
     .map<PointTransactionView>((t) => {
-      const isEarn = t.type === 'EARN';
+      const isEarn = t.transactionType === 'EARN';
       const sign: '+' | '-' = isEarn ? '+' : '-';
       const label: '적립' | '사용' = isEarn ? '적립' : '사용';
 
