@@ -1,61 +1,65 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getPointSummary } from "../api/Points";
+import type { PointSummaryView } from "../model/Points";
 import Header from "../components/Header";
 import PointSummary from "../components/PointSummary";
 import TabSelector from "../components/TabSelector";
 import Card from "../components/Card";
 import EmptyState from "../components/EmptyState";
-import { calculateTotalPoints } from "../utils/PointUtils";
 
 const Points: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const [summary, setSummary] = useState<PointSummaryView | null>(null);
 
-  // 더미 포인트 내역 데이터
-  const historyData = [
-    { id: 1, title: 'GS25 편의점', date: '2024.07.01', amount: -1500 },
-    { id: 2, title: '영어퀴즈 정답', date: '2024.07.02', amount: 500 },
-    { id: 3, title: '로그인 보상', date: '2024.07.03', amount: 100 },
-    { id: 4, title: 'Aegis 기념품 교환', date: '2024.07.04', amount: -500 },
-    { id: 5, title: '단국대학교 퀴즈', date: '2024.07.05', amount: 1000 },
-    { id: 6, title: '이벤트 당첨', date: '2024.07.06', amount: 3650 },
-  ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  // 포인트 api 호출
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await getPointSummary();
+        setSummary(data);
+      } catch (e) {
+        console.error("포인트 조회 실패:", e);
+        setSummary({ balance: 0, history: [] });
+      }
+    })();
+  }, []);
 
-  const point = calculateTotalPoints(historyData);
+  const balance = summary?.balance ?? 0;
+  const transactions = summary?.history ?? [];
 
-  const filteredData = historyData.filter(item => {
-    if (selectedTab === 1) { // 적립
-      return item.amount > 0;
-    }
-    if (selectedTab === 2) { // 사용
-      return item.amount < 0;
-    }
+  // 포인트 적립/사용 정렬
+  const filteredData = (summary?.history ?? []).filter((t) => {
+    if (selectedTab === 1) return t.sign === "+"; // 적립
+    if (selectedTab === 2) return t.sign === "-"; // 사용
     return true; // 전체
   });
 
   return (
     <div>
       <Header leftChild="<" title="포인트" />
-      {historyData.length > 0 ? (
+           {transactions.length === 0 && balance === 0 ? (
+            <EmptyState type="point" />
+          ) : (
         <>
-          <PointSummary point={point} />
+        <PointSummary point={balance} />
           <TabSelector
             tabs={["전체", "적립", "사용"]}
             selected={selectedTab}
             onSelect={setSelectedTab}
           />
+
           <div className="points-history-list">
             {filteredData.map((item) => (
               <Card
-                key={item.id}
+                key={item.pointTransactionId}
                 type="point"
-                title={item.title}
-                date={item.date}
-                amount={item.amount}
+                title={item.reason}
+                date={item.createdAt}
+                amount={item.signedAmount}
               />
-            ))}
+          ))}
           </div>
         </>
-      ) : (
-        <EmptyState type="point" />
       )}
     </div>
   );
