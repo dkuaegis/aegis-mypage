@@ -43,10 +43,10 @@
 }
 
 .profile-current-img {
-    width: 100px;
-    height: 100px;
-    margin-top: 20px;  
-    margin-bottom: 24px;
+    width: 80px;
+    height: 80px;
+    margin-top: 16px;  
+    margin-bottom: 16px;
 }
   
 .image-grid {
@@ -70,7 +70,7 @@
     min-width: 400px;
     max-width: 400px;
     scroll-snap-align: start;
-    margin-top: 24px;
+    margin-top: 16px;
     place-items: center;
 }
   
