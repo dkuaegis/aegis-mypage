@@ -79,6 +79,7 @@
     text-decoration: underline;
     margin-top: 60px;
     cursor: pointer;
+    z-index: 1001;
 }
 
 .Button_EDITSAVE {

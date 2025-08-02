@@ -52,4 +52,5 @@
 .qr-btn-icon {
   margin-right: 6px;
   vertical-align: middle;
+  z-index: 1001;
 }
