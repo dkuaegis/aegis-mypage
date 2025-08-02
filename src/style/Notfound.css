@@ -7,10 +7,10 @@
 }
 
 .notfound-title {
-    font-size: 48px;
-    font-weight: 800;
+    font-size: 32px;
+    font-weight: 700;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .notfound-desc {
@@ -21,7 +21,6 @@
 }
 
 .notfound-image img {
-    width: 310px;
-    height: 310px;
-    margin-bottom: 32px;
+    width: 130px;
+    height: 130px;
 }

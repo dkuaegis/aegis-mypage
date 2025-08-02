@@ -8,12 +8,12 @@ const Notfound = () => {
 
   return (
     <div className="notfound-container">
-      <h1 className="notfound-title">Whoops!<br />Not Found 🥲</h1>
-      <p className="notfound-desc">The page you are looking for does not exist.</p>
       <div className="notfound-image">
         <img src={notFoundImage} alt="not found" />
       </div>
-      <Button text={"go to home"} type={"MAIN"} onClick={() => navigate("/")} />
+      <h1 className="notfound-title">이런!<br />잘못된 접근이에요</h1>
+      <p className="notfound-desc">현재 페이지는 존재하지 않는 페이지에요</p>
+      <Button text={"메인페이지로 돌아가기"} type={"MAIN"} onClick={() => navigate("/")} />
     </div>
   );
 };
