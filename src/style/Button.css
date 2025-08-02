@@ -71,6 +71,7 @@
 }
 
 .Button_CLOSE {
+    position: relative;
     background: none;
     border: none;
     font-size: 16px;
