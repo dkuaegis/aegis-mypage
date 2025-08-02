@@ -44,6 +44,12 @@
 }
 
 .Button_MAIN {
+    color: #000000;   
+    width: 152px;
+    height: 65px;
+}
+
+.Button_BACKHOME {
     background-color: #000000; 
     color: #FFFFFF;   
     width: 270px;
