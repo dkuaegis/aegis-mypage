@@ -5,7 +5,7 @@ import Points from './pages/Points';
 import Coupons from './pages/Coupons';
 import Ranking from './pages/Ranking';
 import LoginAuth from './pages/LoginAuth';
-import UnAuthorized from './pages/Unauthorized';
+import UnAuthorized from './pages/UnAuthorized';
 import Notfound from './pages/Notfound';
 
 const App: React.FC = () => {
