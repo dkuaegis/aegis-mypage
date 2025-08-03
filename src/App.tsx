@@ -5,6 +5,7 @@ import Points from './pages/Points';
 import Coupons from './pages/Coupons';
 import Ranking from './pages/Ranking';
 import LoginAuth from './pages/LoginAuth';
+import UnAuthorized from './pages/Unauthorized';
 import Notfound from './pages/Notfound';
 
 const App: React.FC = () => {
@@ -16,6 +17,7 @@ const App: React.FC = () => {
         <Route path='/category/coupons' element={<Coupons />} />
         <Route path='/category/ranking' element={<Ranking />} />
         <Route path='/login/auth' element={<LoginAuth />} />
+        <Route path='/login/unauthorized' element={<UnAuthorized />} />
         <Route path='*' element={<Notfound />} />
       </Routes>
     </>
