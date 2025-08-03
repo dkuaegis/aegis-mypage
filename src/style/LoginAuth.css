@@ -1,4 +1,4 @@
-.notfound-container {
+.login-auth-container {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -6,21 +6,21 @@
     justify-content: center;
 }
 
-.notfound-title {
+.login-auth-title {
     font-size: 32px;
     font-weight: 700;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.notfound-desc {
+.login-auth-desc {
     color: #7E7E7E;
     font-size: 16px;
     text-align: center;
     margin-bottom: 32px;
 }
 
-.notfound-image img {
+.login-auth-image img {
     width: 130px;
     height: 130px;
 }
