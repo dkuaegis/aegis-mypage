@@ -12,7 +12,7 @@ const OAuthRedirect = () => {
       if (isAuthenticated) {
         navigate("/");
       } else {
-        navigate("/login/auth");
+        navigate("/login/unauthorized");
       }
     };
 
