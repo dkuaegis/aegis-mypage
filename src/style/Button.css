@@ -57,6 +57,23 @@
     border-radius: 25px;
 }
 
+.Button_SIGNUP {
+    background-color: #FFFFFF; 
+    color: #000000;   
+    width: 203px;
+    height: 65px;
+    border-radius: 25px;
+    margin-bottom: 20px;
+}
+
+.Button_LOGIN {
+    background-color: #000000; 
+    color: #FFFFFF;   
+    width: 203px;
+    height: 65px;
+    border-radius: 25px;
+}
+
 .Button_ACTIVITY {
     color: #7E7E7E;
     width: 152px;
