@@ -19,7 +19,6 @@ export async function checkAuth(): Promise<boolean> {
       console.log("로그인 실패 상태:", data.status);
       return false;
     }
-
   } catch (err) {
     console.error("인증 확인 실패:", err);
     return false;

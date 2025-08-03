@@ -19,7 +19,7 @@ const OAuthRedirect = () => {
     verify();
   }, [navigate]);
 
-  return <div>로그인 확인 중입니다...</div>;
+  return <div>로그인 중 ...</div>;
 };
 
 export default OAuthRedirect;

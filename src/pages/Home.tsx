@@ -18,11 +18,16 @@ const Home: React.FC = () => {
     // 사용자 정보 조회 API 호출
     useEffect(() => {
       (async () => {
-        const data = await getMyPage();
-        setMypage(data);
+        try {
+          const data = await getMyPage();
+          setMypage(data);
+        } catch (error) {
+          console.error("사용자 정보 조회 실패:", error);
+          navigate("/login/auth");
+        }
       })();
-    }, []);
-
+    }, [navigate]);
+    
     // QRCode 생성 API 호출
     const onClickQR = async () => {
       try {
