@@ -36,7 +36,7 @@ const Home: React.FC = () => {
 
     return (
         <div>
-            <Header leftChild={"<"} title={"마이"} />
+            <Header leftChild={"<"} title={"마이"} backPath="/login/auth"/>
             <Profile />
             <div className="point-box">
               <Button
