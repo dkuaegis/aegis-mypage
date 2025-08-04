@@ -16,7 +16,7 @@ export async function issueQRCode(): Promise<string> {
   });
 
   const raw = await res.text();
-  console.log('QR raw response:', raw);
+  // console.log('QR raw response:', raw);
 
   if (!res.ok) {
     throw new Error(raw || `HTTP ${res.status} ${res.statusText}`);
