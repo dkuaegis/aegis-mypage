@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import type { ProfileEditModalProps } from "../model/ProfileEditModal";
 import { PROFILE_ICONS } from "../constants/ProfileIcons";
 import type { IconKey } from "../constants/ProfileIcons";
 import Button from "./Button";
 import "../style/ProfileEditModal.css";
 import { ProfileEdit } from "../api/ProfileEdit";
+import { getMyPage } from "../api/Mypage";
 // import { toIconId } from "../utils/Icon";
 
 const IMAGES_PER_PAGE = 8;
@@ -16,6 +18,8 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   onClose,
 }) => {
   const [tempKey, setTempKey] = useState<IconKey>(selectedKey);
+  const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTempKey(selectedKey);
@@ -37,10 +41,23 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
     }
   };
 
+  // 사용자 정보 조회 API 호출
+  useEffect(() => {
+      (async () => {
+        try {
+          const data = await getMyPage();
+          setMypage(data);
+        } catch (error) {
+          console.error("사용자 정보 조회 실패:", error);
+          navigate("/login/auth");
+        }
+      })();
+    }, [navigate]);
+
   return (
     <div className="profile-modal-overlay">
       <div className="profile-modal">
-        <h2 className="profile-title">임세윤님,<br />프로필 이미지를 꾸며보세요</h2>
+        <h2 className="profile-title">{mypage?.name},<br />프로필 이미지를 꾸며보세요</h2>
         <img src={PROFILE_ICONS[tempKey]} alt="profile-img" className="profile-current-img" />
         <div className="image-grid">
           {pages.map((keys, pageIdx) => (
