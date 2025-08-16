@@ -11,6 +11,7 @@ import PYTHON from "../../public/PYTHON.png";
 import RUBY from "../../public/RUBY.png";
 import RUST from "../../public/RUST.png";
 import SWIFT from "../../public/SWIFT.png";
+import NONE from "../../public/NULL.png";
 
 export const PROFILE_ICONS: Record<string, string> = {
   C,
@@ -26,6 +27,7 @@ export const PROFILE_ICONS: Record<string, string> = {
   RUBY,
   RUST,
   SWIFT,
+  NONE,
 };
 
 export type IconKey = keyof typeof PROFILE_ICONS;
