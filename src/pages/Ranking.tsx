@@ -18,7 +18,7 @@ const Ranking: React.FC = () => {
         const { info, top10, me } = await getRankingData();
         setInfo(info);
         setTop10(top10);
-        console.log("Top10 Data:", top10);
+        // console.log("Top10 Data:", top10);
         setMe(me);
       } catch (error) {
         console.error("랭킹 데이터를 불러오지 못했습니다:", error);
