@@ -114,4 +114,30 @@
 .image-grid::-webkit-scrollbar {
   display: none;                
 }
-  
+
+.image-grid {
+  scroll-behavior: smooth;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 0 56px;
+}
+
+.pager-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #D9D9D9;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.2s ease;
+}
+
+.pager-dot.active {
+  background: #000000;
+}
