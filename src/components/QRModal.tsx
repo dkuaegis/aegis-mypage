@@ -2,8 +2,8 @@ import { useState } from "react";
 import { issueQRCode } from "../api/QRCode";
 import type { QRModalProps } from "../model/QRModal";
 import "../style/QRModal.css";
-import refreshImg from "../assets/refresh.png";
-import closeImg from "../assets/close.png";
+import refreshImg from "../assets/refresh.svg";
+import closeImg from "../assets/close.svg";
 import Button from "../components/Button";
 
 const QRModal: React.FC<QRModalProps> = ({ onClose, qrImageUrl }) => {

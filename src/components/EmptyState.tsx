@@ -1,5 +1,5 @@
 import '../style/EmptyState.css';
-import cartIcon from "../assets/cart.png";
+import cartIcon from "../assets/cart.svg";
 import type { EmptyStateProps } from '../model/EmptyState';
 
 const EmptyState: React.FC<EmptyStateProps> = ({ type }) => {

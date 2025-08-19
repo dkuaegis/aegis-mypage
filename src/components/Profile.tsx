@@ -4,7 +4,7 @@ import "../style/Profile.css";
 import ProfileEditModal from "./ProfileEditModal";
 import { PROFILE_ICONS, ICON_KEYS } from "../constants/ProfileIcons";
 import type { IconKey } from "../constants/ProfileIcons";
-import editIcon from "../assets/edit.png";
+import editIcon from "../assets/edit.svg";
 
 const Profile: React.FC = () => {
     const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);
