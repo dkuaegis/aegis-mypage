@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import notFoundImage from "../assets/notFoundImage.png";
+import notFoundImage from "../assets/notFoundImage.svg";
 import Button from "../components/Button";
 import "../style/Notfound.css";
 

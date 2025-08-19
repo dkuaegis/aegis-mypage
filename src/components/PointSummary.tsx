@@ -1,4 +1,4 @@
-import bagIcon from "../assets/pointBag.png";
+import bagIcon from "../assets/pointBag.svg";
 import type { PointSummaryProps } from "../model/PointSummary";
 import "../style/PointSummary.css"
 
