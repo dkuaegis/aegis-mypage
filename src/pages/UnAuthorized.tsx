@@ -1,4 +1,4 @@
-import UnAuthImage from "../assets/UnAuthorizedImage.png";
+import UnAuthImage from "../assets/UnAuthorizedImage.svg";
 import Button from "../components/Button";
 import "../style/UnAuthorized.css";
 
