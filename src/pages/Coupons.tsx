@@ -1,34 +1,54 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import TabSelector from "../components/TabSelector";
 import Card from "../components/Card";
 import EmptyState from "../components/EmptyState";
+import { getCoupons } from "../api/Coupons";
+import type { CouponCardProps } from "../model/Card";
+
+const formatPrice = (amount: number): string => `${amount.toLocaleString()}원`;
 
 const Coupons: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
-  // 더미 쿠폰 데이터
-  const couponData = [
-    { id: 1, price: '5,000원', desc: 'Aegis 웰컴 쿠폰', status: '사용전' as const },
-    { id: 2, price: '10% 할인', desc: '단국대 제휴 쿠폰', status: '사용전' as const },
-    { id: 3, price: '아메리카노 1잔', desc: 'GS25 제휴 쿠폰', status: '사용후' as const },
-    { id: 4, price: '3,000원', desc: '퀴즈 이벤트 보상', status: '사용후' as const },
-    { id: 5, price: '2,000원', desc: 'Aegis 출석 보상', status: '사용전' as const },
-  ];
+  const [couponItems, setCouponItems] = useState<
+    Array<{
+      id: number;
+      price: string;
+      desc: string;
+      status: CouponCardProps["status"];
+    }>
+  >([]);
 
-  const filteredData = couponData.filter(item => {
-    if (selectedTab === 1) { // 사용전
-      return item.status === '사용전';
-    }
-    if (selectedTab === 2) { // 사용후
-      return item.status === '사용후';
-    }
+  // 쿠폰 API 호출
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await getCoupons(); // [{ issuedCouponId, couponName, discountAmount, isValid }, ...]
+        const mapped = (data ?? []).map((c) => ({
+          id: c.issuedCouponId,
+          price: formatPrice(c.discountAmount),
+          desc: c.couponName,
+          status: (c.isValid ? "사용전" : "사용후") as CouponCardProps["status"],
+        }));
+        setCouponItems(mapped);
+      } catch (e) {
+        console.error("쿠폰 조회 실패:", e);
+        setCouponItems([]);
+      }
+    })();
+  }, []);
+
+  // 탭 필터: 0 전체, 1 사용전, 2 사용후
+  const filteredData = couponItems.filter((item) => {
+    if (selectedTab === 1) return item.status === "사용전";
+    if (selectedTab === 2) return item.status === "사용후";
     return true; // 전체
   });
-  
+
   return (
     <div>
       <Header leftChild={"<"} title={"쿠폰함"} />
-      {couponData.length > 0 ? (
+      {couponItems.length > 0 ? (
         <>
           <TabSelector
             tabs={["전체", "사용전", "사용후"]}
