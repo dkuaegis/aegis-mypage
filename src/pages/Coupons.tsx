@@ -48,7 +48,9 @@ const Coupons: React.FC = () => {
   return (
     <div>
       <Header leftChild={"<"} title={"쿠폰함"} />
-      {couponItems.length > 0 ? (
+      {couponItems.length === 0 ? (
+            <EmptyState type="coupon" />
+          ) : (
         <>
           <TabSelector
             tabs={["전체", "사용전", "사용후"]}
@@ -64,11 +66,9 @@ const Coupons: React.FC = () => {
                 desc={item.desc}
                 status={item.status}
               />
-            ))}
+          ))}
           </div>
         </>
-      ) : (
-        <EmptyState type="coupon" />
       )}
     </div>
   );
