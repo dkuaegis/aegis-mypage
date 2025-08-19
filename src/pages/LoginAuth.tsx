@@ -1,4 +1,4 @@
-import loginImage from "../assets/loginImage.png";
+import loginImage from "../assets/loginImage.svg";
 import Button from "../components/Button";
 import "../style/LoginAuth.css";
 

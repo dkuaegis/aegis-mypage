@@ -7,7 +7,7 @@ import Button from "../components/Button";
 import Profile from "../components/Profile";
 import ActivitySection from "../components/ActivitySection";
 import QRModal from "../components/QRModal";
-import pointImg from '../assets/point.png';
+import pointImg from '../assets/point.svg';
 
 const Home: React.FC = () => {
     const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);

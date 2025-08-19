@@ -1,5 +1,5 @@
 import "../style/Card.css";
-import coinIcon from "../assets/point.png";
+import coinIcon from "../assets/point.svg";
 import couponIcon from "../assets/coupon.png";
 import type { CardProps } from "../model/Card";
 
