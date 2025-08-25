@@ -1,3 +1,13 @@
+.pointshop-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  min-height: 100vh;
+  background-color: #f9f9fb;
+  box-sizing: border-box;
+}
+
 .gacha-container {
     display: flex;
     justify-content: center;
@@ -9,16 +19,24 @@
     font-size: 16px;
     font-weight: 600;
     color: #7E7E7E;
+    margin: 12px 0 4px;
 }
 
 .gacha-title {
     font-size: 24px;
     font-weight: 700;
     color: #000000;
+    margin-bottom: 28px;
 }
 
 .gacha-container {
     font-size: 24px;
     font-weight: 700;
     color: #000000;
+}
+
+.icon-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
 }

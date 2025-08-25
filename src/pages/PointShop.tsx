@@ -2,6 +2,7 @@ import Header from "../components/Header";
 // import { lazy } from "react";
 // const GachaMachine3D = lazy(() => import("../components/GachaMachine3D"));
 // import type { GachaItem } from "../components/GachaMachine3D";
+import GachaList from "../components/GachaList";
 import Button from "../components/Button";
 import "../style/PointShop.css";
 
@@ -20,7 +21,7 @@ const PointShop: React.FC = () => {
             <Header leftChild={"<"} title={"포인트샵"}/>
             <div className="gacha-desc">꽝없는 뽑기!</div>
             <div className="gacha-title">임세윤님, 100포인트를<br />뽑기 1회권으로 교환할 수 있어요!</div>
-            <div className="gachalist-container"></div>
+            <GachaList />
             <div className="gacha-desc">핫식스, 스타벅스 상품권, 치킨 등 <br />복권에서 나온 상품으로 교환 가능해요</div>
             <Button text={"교환하기"} type={"EXCHANGE"} onClick={() => ""} />
         </div>
