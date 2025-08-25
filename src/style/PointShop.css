@@ -1,0 +1,24 @@
+.gacha-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; 
+}
+
+.gacha-desc {
+    font-size: 16px;
+    font-weight: 600;
+    color: #7E7E7E;
+}
+
+.gacha-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.gacha-container {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
+}
