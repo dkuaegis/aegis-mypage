@@ -124,7 +124,9 @@
 
 .Button_EXCHANGE {
     background-color: #000000;
-    width: 60vh;
+    width: 320px;
     height: 50px;
     color: #FFFFFF;   
+    position: fixed;
+    bottom: 40px;
 }

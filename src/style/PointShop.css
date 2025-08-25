@@ -2,41 +2,39 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px;
-  min-height: 100vh;
-  background-color: #f9f9fb;
-  box-sizing: border-box;
-}
-
-.gacha-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh; 
+  padding: 24px 20px;
 }
 
 .gacha-desc {
     font-size: 16px;
     font-weight: 600;
     color: #7E7E7E;
-    margin: 12px 0 4px;
+    align-self: flex-start;
+    text-align: left;
+    margin: 0 0 8px 20px;
 }
 
 .gacha-title {
     font-size: 24px;
     font-weight: 700;
     color: #000000;
-    margin-bottom: 28px;
+    align-self: flex-start;
+    text-align: left;
+    margin: 0 0 120px 20px;
+}
+
+.gacha-list-desc {
+    font-size: 16px;
+    font-weight: 600;
+    color: #7E7E7E;
+    margin: 120px 0 0 0;
+    text-align: center;
+    position: fixed;
+    bottom: 150px;
 }
 
 .gacha-container {
     font-size: 24px;
     font-weight: 700;
     color: #000000;
-}
-
-.icon-img {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
 }

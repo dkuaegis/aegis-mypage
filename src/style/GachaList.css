@@ -6,6 +6,9 @@
     align-items: center;
     justify-content: center; 
     gap: 20px;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-60%);
 }
 
 .gacha-item {

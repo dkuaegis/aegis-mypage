@@ -17,14 +17,16 @@ import "../style/PointShop.css";
 
 const PointShop: React.FC = () => {
     return (
-        <div>
-            <Header leftChild={"<"} title={"포인트샵"}/>
-            <div className="gacha-desc">꽝없는 뽑기!</div>
-            <div className="gacha-title">임세윤님, 100포인트를<br />뽑기 1회권으로 교환할 수 있어요!</div>
+        <>
+        <Header leftChild={"<"} title={"포인트샵"}/>
+        <div className="pointshop-page">
+            <p className="gacha-desc">꽝없는 뽑기!</p>
+            <h1 className="gacha-title">임세윤님, 100포인트를<br />뽑기 1회권으로 교환할 수 있어요!</h1>
             <GachaList />
-            <div className="gacha-desc">핫식스, 스타벅스 상품권, 치킨 등 <br />복권에서 나온 상품으로 교환 가능해요</div>
+            <p className="gacha-list-desc">핫식스, 스타벅스 상품권, 치킨 등 <br />복권에서 나온 상품으로 교환 가능해요</p>
             <Button text={"교환하기"} type={"EXCHANGE"} onClick={() => ""} />
         </div>
+        </>
     )
 }
 
