@@ -3,23 +3,7 @@ import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, OrbitControls, Html } from "@react-three/drei";
 import GachaResultCard from "./GachaResultCard";
-
-export type GachaItem = {
-  id: string;
-  label: string;
-  color?: string;   // 공 색
-  weight?: number;  // 확률 가중치
-  imageSrc?: string; // 상품 이미지
-};
-
-type Props = {
-  items: GachaItem[];
-  onResult?: (item: GachaItem) => void;
-  width?: number | string;
-  height?: number | string;
-  className?: string;
-  modelScale?: number;
-};
+import type { GachaItem, GachaMachine3DProps } from "../model/Gacha";
 
 // 유틸 -> easing
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -290,7 +274,7 @@ export default function GachaMachine3D({
   height = 520,
   className,
   modelScale = 0.7,
-}: Props) {
+}: GachaMachine3DProps) {
   const deviceRatio =
     typeof window !== "undefined" ? Math.min(window.devicePixelRatio, 2) : 1.5;
 
@@ -298,11 +282,11 @@ export default function GachaMachine3D({
     items.length > 0
       ? items
       : [
-          { id: "1", label: "치킨", weight: 0.5},
-          { id: "2", label: "스타벅스 1만원권", weight: 1.0 },
+          { id: "1", label: "핫식스", weight: 61},
+          { id: "2", label: "컴포즈커피", weight: 32 },
           { id: "3", label: "회비 할인 쿠폰", weight: 5.5 },
-          { id: "4", label: "컴포즈커피", weight: 32 },
-          { id: "5", label: "핫식스", weight: 61 },
+          { id: "4", label: "스타벅스 1만원권", weight: 1.0 },
+          { id: "5", label: "치킨", weight: 0.5 },
         ];
 
   const [resultItem, setResultItem] = useState<GachaItem | null>(null);

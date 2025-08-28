@@ -1,26 +1,18 @@
 import "../style/GachaResultCard.css";
-import ImgPrize1 from "../assets/prizes/chicken.svg";
-import ImgPrize2 from "../assets/prizes/starbucks.svg";
+import ImgPrize1 from "../assets/prizes/hotsix.svg";
+import ImgPrize2 from "../assets/prizes/compose.svg";
 import ImgPrize3 from "../assets/prizes/discountcoupon.svg";
-import ImgPrize4 from "../assets/prizes/compose.svg";
-import ImgPrize5 from "../assets/prizes/hotsix.svg";
+import ImgPrize4 from "../assets/prizes/starbucks.svg";
+import ImgPrize5 from "../assets/prizes/chicken.svg";
 import Button from "./Button";
+import type { GachaResultCardProps } from "../model/Gacha";
 
 const PRIZE_IMAGE_MAP: Record<string, string> = {
-  "치킨": ImgPrize1,
-  "스타벅스 1만원권": ImgPrize2,
+  "핫식스": ImgPrize1,
+  "컴포즈커피": ImgPrize2,
   "회비 할인 쿠폰": ImgPrize3,
-  "컴포즈커피": ImgPrize4,
-  "핫식스": ImgPrize5,
-};
-
-export type GachaResultCardProps = {
-  item: {
-    label: string;
-    imageSrc?: string;
-    description?: string;
-  };
-  onClose: () => void;
+  "스타벅스 1만원권": ImgPrize4,
+  "치킨": ImgPrize5,
 };
 
 function resolvePrizeImage(label: string, explicit?: string) {
