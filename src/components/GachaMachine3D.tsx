@@ -1,13 +1,15 @@
-import { useMemo, useRef, useState, useEffect } from "react";
+import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, OrbitControls, Html } from "@react-three/drei";
+import GachaResultCard from "./GachaResultCard";
 
 export type GachaItem = {
   id: string;
   label: string;
   color?: string;   // 공 색
   weight?: number;  // 확률 가중치
+  imageSrc?: string; // 상품 이미지
 };
 
 type Props = {
@@ -16,15 +18,15 @@ type Props = {
   width?: number | string;
   height?: number | string;
   className?: string;
-  modelScale?: number; // 3D 모델 스케일
+  modelScale?: number;
 };
 
-// -------- 유틸: 이징 --------
+// 유틸 -> easing
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 const easeInOutCubic = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-// -------- 애니메이션 훅 --------
+// 애니메이션 훅
 function useValueAnimator() {
   const animRef = useRef<{
     active: boolean;
@@ -59,7 +61,7 @@ function useValueAnimator() {
   return { start };
 }
 
-// -------- 공(구체) 메쉬 --------
+// 공 (구체)
 function BallMesh({ color = "#FFD54F" }: { color?: string }) {
   return (
     <mesh>
@@ -69,21 +71,24 @@ function BallMesh({ color = "#FFD54F" }: { color?: string }) {
   );
 }
 
-// -------- 본체 --------
+// 본체
 function Machine3D({
   items,
   onResult,
+  onShowResult,
+  isOverlayOpen,
 }: {
   items: GachaItem[];
   onResult?: (item: GachaItem) => void;
+  onShowResult: (item: GachaItem | null) => void;
+  isOverlayOpen: boolean;
 }) {
-  const groupRef = useRef<THREE.Group>(null!);
-  const chosenRef = useRef<THREE.Mesh>(null!);
+  const groupRef = useRef<THREE.Group | null>(null);
+  const chosenRef = useRef<THREE.Mesh | null>(null);
 
   const [spinning, setSpinning] = useState(false);
   const [dropping, setDropping] = useState(false);
   const [resultIdx, setResultIdx] = useState<number | null>(null);
-  const [showResult, setShowResult] = useState<string | null>(null);
 
   const ringRadius = 0.55;
   const ringY = 0.2;
@@ -96,15 +101,10 @@ function Machine3D({
   const { start: startSpinAnim } = useValueAnimator();
   const { start: startDropAnim } = useValueAnimator();
 
+  // 대기 중 천천히 회전
   useFrame((_, dt) => {
-    if (!spinning) groupRef.current.rotation.y += dt * 0.2;
+    if (!spinning && groupRef.current) groupRef.current.rotation.y += dt * 0.2;
   });
-
-  useEffect(() => {
-    if (!showResult) return;
-    const t = setTimeout(() => setShowResult(null), 2200);
-    return () => clearTimeout(t);
-  }, [showResult]);
 
   const pickWeightedIndex = () => {
     const total = items.reduce((s, it) => s + (it.weight ?? 1), 0);
@@ -117,13 +117,14 @@ function Machine3D({
   };
 
   const handleSpin = () => {
-    if (spinning || dropping) return;
+    if (spinning || dropping || !groupRef.current) return;
+
     const idx = pickWeightedIndex();
     setResultIdx(idx);
     setSpinning(true);
 
     const current = groupRef.current.rotation.y;
-    const turns = 6 + Math.floor(Math.random() * 3); // 6~8바퀴
+    const turns = 6 + Math.floor(Math.random() * 3);
     const targetBase = -baseAngles[idx];
     const target = targetBase + turns * Math.PI * 2;
 
@@ -132,7 +133,9 @@ function Machine3D({
       to: target,
       duration: 2200,
       ease: easeOutCubic,
-      onUpdate: (v) => (groupRef.current.rotation.y = v),
+      onUpdate: (v) => {
+        if (groupRef.current) groupRef.current.rotation.y = v;
+      },
       onComplete: () => {
         setSpinning(false);
         startDrop(idx);
@@ -148,7 +151,10 @@ function Machine3D({
     const control = new THREE.Vector3(0.15, -0.2, 0.85);
 
     const color = items[idx].color ?? "#FFD54F";
-    (chosenRef.current.material as THREE.MeshStandardMaterial).color.set(color);
+    if (chosenRef.current) {
+      const mat = chosenRef.current.material as THREE.MeshStandardMaterial;
+      mat.color.set(color);
+    }
 
     const getBezier = (t: number) => {
       const inv = 1 - t;
@@ -166,13 +172,16 @@ function Machine3D({
       ease: easeInOutCubic,
       onUpdate: (t) => {
         const p = getBezier(t);
-        chosenRef.current.position.set(p.x, p.y, p.z);
-        chosenRef.current.rotation.x = THREE.MathUtils.lerp(0, Math.PI * 2, t);
+        if (chosenRef.current) {
+          chosenRef.current.position.set(p.x, p.y, p.z);
+          chosenRef.current.rotation.x = THREE.MathUtils.lerp(0, Math.PI * 2, t);
+        }
       },
       onComplete: () => {
         setDropping(false);
-        setShowResult(items[idx].label);
-        onResult?.(items[idx]);
+        const item = items[idx];
+        onShowResult(item);
+        onResult?.(item);
       },
     });
   };
@@ -200,13 +209,13 @@ function Machine3D({
 
   return (
     <>
-      {/* 바닥(그림자 제거: shadowMaterial 사용 안 함) */}
+      {/* 바닥 */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
         <circleGeometry args={[2, 32]} />
         <meshStandardMaterial color="#eef3f9" />
       </mesh>
 
-      {/* 베이스(그림자 비활성) */}
+      {/* 베이스 */}
       <group>
         <mesh position={[0, -0.95, 0]}>
           <cylinderGeometry args={[0.55, 0.65, 0.2, 32]} />
@@ -242,90 +251,82 @@ function Machine3D({
         <meshStandardMaterial color="#FFD54F" />
       </mesh>
 
-      {/* 조명 (그림자 끔) */}
+      {/* 조명 */}
       <hemisphereLight intensity={0.6} groundColor={new THREE.Color("#bcd")} />
       <directionalLight position={[2, 3, 2]} intensity={1.1} />
-
       <Environment preset="city" />
-
-      {/* 결과 텍스트 */}
-      <Html center>
-        {showResult && (
-          <div
-            style={{
-              position: "absolute",
-              top: "-280px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              background: "rgba(0,0,0,0.7)",
-              color: "white",
-              padding: "8px 12px",
-              borderRadius: 8,
-              fontSize: 14,
-            }}
-          >
-            🎉 결과: {showResult}
-          </div>
-        )}
-      </Html>
 
       <OrbitControls enableZoom={false} enablePan={false} />
 
-      {/* Spin 버튼 */}
-      <Html position={[0, -1.15, 0]}>
-        <button
-          onClick={handleSpin}
-          disabled={spinning || dropping}
-          style={{
-            padding: "8px 14px",
-            borderRadius: 12,
-            background: spinning || dropping ? "#aaa" : "#4f9dff",
-            color: "white",
-            fontWeight: 700,
-            cursor: spinning || dropping ? "not-allowed" : "pointer",
-          }}
-        >
-          {spinning || dropping ? "Spinning..." : "Spin"}
-        </button>
-      </Html>
+      {/* 뽑기 버튼 */}
+      {!isOverlayOpen && (
+        <Html position={[0, -1.4, 0]} center>
+          <button
+            onClick={handleSpin}
+            disabled={spinning || dropping}
+            style={{
+              width: "120px",
+              height: "50px",
+              borderRadius: "20px",
+              background: "#000000",
+              color: "white",
+              fontWeight: 700,
+              fontSize: "16px",
+              cursor: spinning || dropping ? "not-allowed" : "pointer",
+            }}
+          >
+            {spinning || dropping ? "상품 추첨 중..." : "당첨 뽑기!"}
+          </button>
+        </Html>
+      )}
     </>
   );
 }
 
-// -------- 최종 Export --------
 export default function GachaMachine3D({
   items,
   onResult,
   width = "100%",
   height = 520,
   className,
-  modelScale = 0.6,
+  modelScale = 0.7,
 }: Props) {
   const deviceRatio =
-    typeof window !== "undefined"
-      ? Math.min(window.devicePixelRatio, 2)
-      : 1.5;
+    typeof window !== "undefined" ? Math.min(window.devicePixelRatio, 2) : 1.5;
 
   const safeItems =
     items.length > 0
       ? items
       : [
-          { id: "1", label: "포인트 100" },
-          { id: "2", label: "쿠폰 1장" },
-          { id: "3", label: "꽝" },
+          { id: "1", label: "치킨", weight: 0.5},
+          { id: "2", label: "스타벅스 1만원권", weight: 1.0 },
+          { id: "3", label: "회비 할인 쿠폰", weight: 5.5 },
+          { id: "4", label: "컴포즈커피", weight: 32 },
+          { id: "5", label: "핫식스", weight: 61 },
         ];
 
+  const [resultItem, setResultItem] = useState<GachaItem | null>(null);
+
   return (
-    <div style={{ width, height }} className={className}>
-      <Canvas
-        dpr={deviceRatio}
-        // shadows 제거
-        camera={{ position: [0.6, 0.6, 2.2], fov: 45 }}
-      >
+    <div style={{ width, height, position: "relative" }} className={className}>
+      <Canvas dpr={deviceRatio} camera={{ position: [0.6, 0.6, 2.2], fov: 45 }}>
         <group scale={[modelScale, modelScale, modelScale]}>
-          <Machine3D items={safeItems} onResult={onResult} />
+          <Machine3D
+            items={safeItems}
+            onResult={onResult}
+            onShowResult={setResultItem}
+            isOverlayOpen={!!resultItem}
+          />
         </group>
       </Canvas>
+
+      {/* 결과 카드 */}
+      {resultItem && (
+        <GachaResultCard
+          item={resultItem}
+          onClose={() => setResultItem(null)}
+        />
+      )}
     </div>
   );
 }

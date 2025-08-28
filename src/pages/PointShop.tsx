@@ -12,7 +12,6 @@ const items: GachaItem[] = [
   { id: 'prize3', label: '회비 할인 쿠폰', color: '#C2B5FB' },
   { id: 'prize4', label: '컴포즈커피 아메리카노', color: '#FF5975' },
   { id: 'prize5', label: '핫식스', color: '#74B8FF' },
-
 ];
 
 const PointShop: React.FC = () => {
@@ -37,7 +36,7 @@ const PointShop: React.FC = () => {
                     onResult={(it: GachaItem) => console.log("결과:", it.label)}
                     width={320}
                     height={385}
-                    modelScale={0.6}
+                    modelScale={0.7}
                 />
             </div>
         )}
