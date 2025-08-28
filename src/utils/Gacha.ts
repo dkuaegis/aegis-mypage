@@ -1,14 +1,30 @@
-export type Weighted = { weight?: number };
+export function pickIndexByPercent<T>(
+  list: T[],
+  getPercent: (x: T) => number | undefined
+): number {
+  const n = list.length;
+  if (n === 0) return 0;
 
-export function pickWeightedIndex<T extends Weighted>(items: T[]): number {
-  const total = items.reduce((s, it) => s + (it.weight ?? 1), 0);
-  if (items.length === 0) return 0;
-  if (!(total > 0)) return items.length - 1;
-
-  let r = Math.random() * total;
-  for (let i = 0; i < items.length; i++) {
-    r -= items[i].weight ?? 1;
-    if (r <= 0) return i;
+  // 퍼센트 수집 (undefined/음수/NaN -> 0)
+  const pct: number[] = new Array(n);
+  let total = 0;
+  for (let i = 0; i < n; i++) {
+    const raw = getPercent(list[i]);
+    const v = typeof raw === "number" && isFinite(raw) && raw > 0 ? raw : 0;
+    pct[i] = v;
+    total += v;
   }
-  return items.length - 1;
+
+  // 전부 0이면 균등 분포로 대체
+  if (total <= 0) {
+    return Math.floor(Math.random() * n);
+  }
+
+  // 누적 감산 방식으로 추첨
+  let r = Math.random() * total;
+  for (let i = 0; i < n; i++) {
+    r -= pct[i];
+    if (r < 0) return i;
+  }
+  return n - 1;
 }

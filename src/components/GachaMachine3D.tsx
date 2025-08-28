@@ -6,7 +6,7 @@ import GachaResultCard from "./GachaResultCard";
 import type { GachaItem, GachaMachine3DProps } from "../model/Gacha";
 import { useValueAnimator } from "../hooks/useValueAnimator";
 import { easeOutCubic, easeInOutCubic } from "../utils/Easing";
-import { pickWeightedIndex } from "../utils/Gacha";
+import { pickIndexByPercent } from "../utils/Gacha";
 
 // 공 (구체)
 function BallMesh({ color = "#FFD54F" }: { color?: string }) {
@@ -55,8 +55,8 @@ function Machine3D({
 
   const handleSpin = () => {
     if (spinning || dropping || !groupRef.current) return;
-
-    const idx = pickWeightedIndex(items);
+    
+    const idx = pickIndexByPercent(items, it => it.weight);
     setResultIdx(idx);
     setSpinning(true);
 
