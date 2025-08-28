@@ -19,7 +19,7 @@ const ActivitySection: React.FC = () => {
             </span>
           }
           type="ACTIVITY"
-          onClick={() => {}}
+          onClick={() => navigate("/category/pointshop")}
         />
         <Button
           text={

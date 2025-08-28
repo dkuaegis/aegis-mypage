@@ -1,0 +1,40 @@
+.pointshop-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 20px;
+}
+
+.gacha-desc {
+    font-size: 16px;
+    font-weight: 600;
+    color: #7E7E7E;
+    align-self: flex-start;
+    text-align: left;
+    margin: 0 0 8px 20px;
+}
+
+.gacha-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
+    align-self: flex-start;
+    text-align: left;
+    margin: 0 0 120px 20px;
+}
+
+.gacha-list-desc {
+    font-size: 16px;
+    font-weight: 600;
+    color: #7E7E7E;
+    margin: 120px 0 0 0;
+    text-align: center;
+    position: fixed;
+    bottom: 150px;
+}
+
+.gacha-container {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
+}
