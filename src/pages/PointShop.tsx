@@ -1,5 +1,5 @@
 import { lazy, useState } from "react";
-import type { GachaItem } from "../components/GachaMachine3D";
+import type { GachaItem } from "../model/Gacha";
 import GachaList from "../components/GachaList";
 import Header from "../components/Header";
 import Button from "../components/Button";

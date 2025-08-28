@@ -4,46 +4,9 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, OrbitControls, Html } from "@react-three/drei";
 import GachaResultCard from "./GachaResultCard";
 import type { GachaItem, GachaMachine3DProps } from "../model/Gacha";
-
-// 유틸 -> easing
-const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-const easeInOutCubic = (t: number) =>
-  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-// 애니메이션 훅
-function useValueAnimator() {
-  const animRef = useRef<{
-    active: boolean;
-    from: number;
-    to: number;
-    start: number;
-    duration: number;
-    ease: (t: number) => number;
-    onUpdate?: (v: number) => void;
-    onComplete?: () => void;
-  } | null>(null);
-
-  useFrame(() => {
-    const a = animRef.current;
-    if (!a || !a.active) return;
-    const t = (performance.now() - a.start) / a.duration;
-    const clamped = Math.min(1, Math.max(0, t));
-    const v = THREE.MathUtils.lerp(a.from, a.to, a.ease(clamped));
-    a.onUpdate?.(v);
-    if (clamped >= 1) {
-      a.active = false;
-      a.onComplete?.();
-    }
-  });
-
-  const start = (
-    opt: Omit<NonNullable<typeof animRef.current>, "active" | "start">
-  ) => {
-    animRef.current = { active: true, ...opt, start: performance.now() };
-  };
-
-  return { start };
-}
+import { useValueAnimator } from "../hooks/useValueAnimator";
+import { easeOutCubic, easeInOutCubic } from "../utils/Easing";
+import { pickWeightedIndex } from "../utils/Gacha";
 
 // 공 (구체)
 function BallMesh({ color = "#FFD54F" }: { color?: string }) {
@@ -90,25 +53,15 @@ function Machine3D({
     if (!spinning && groupRef.current) groupRef.current.rotation.y += dt * 0.2;
   });
 
-  const pickWeightedIndex = () => {
-    const total = items.reduce((s, it) => s + (it.weight ?? 1), 0);
-    let r = Math.random() * total;
-    for (let i = 0; i < items.length; i++) {
-      r -= items[i].weight ?? 1;
-      if (r <= 0) return i;
-    }
-    return items.length - 1;
-  };
-
   const handleSpin = () => {
     if (spinning || dropping || !groupRef.current) return;
 
-    const idx = pickWeightedIndex();
+    const idx = pickWeightedIndex(items);
     setResultIdx(idx);
     setSpinning(true);
 
     const current = groupRef.current.rotation.y;
-    const turns = 6 + Math.floor(Math.random() * 3);
+    const turns = 6 + Math.floor(Math.random() * 3); // 6~8바퀴
     const targetBase = -baseAngles[idx];
     const target = targetBase + turns * Math.PI * 2;
 
@@ -136,8 +89,7 @@ function Machine3D({
 
     const color = items[idx].color ?? "#FFD54F";
     if (chosenRef.current) {
-      const mat = chosenRef.current.material as THREE.MeshStandardMaterial;
-      mat.color.set(color);
+      (chosenRef.current.material as THREE.MeshStandardMaterial).color.set(color);
     }
 
     const getBezier = (t: number) => {
@@ -267,6 +219,7 @@ function Machine3D({
   );
 }
 
+// 최종 결과
 export default function GachaMachine3D({
   items,
   onResult,
@@ -278,11 +231,11 @@ export default function GachaMachine3D({
   const deviceRatio =
     typeof window !== "undefined" ? Math.min(window.devicePixelRatio, 2) : 1.5;
 
-  const safeItems =
+  const safeItems: GachaItem[] =
     items.length > 0
       ? items
       : [
-          { id: "1", label: "핫식스", weight: 61},
+          { id: "1", label: "핫식스", weight: 61 },
           { id: "2", label: "컴포즈커피", weight: 32 },
           { id: "3", label: "회비 할인 쿠폰", weight: 5.5 },
           { id: "4", label: "스타벅스 1만원권", weight: 1.0 },
@@ -306,10 +259,7 @@ export default function GachaMachine3D({
 
       {/* 결과 카드 */}
       {resultItem && (
-        <GachaResultCard
-          item={resultItem}
-          onClose={() => setResultItem(null)}
-        />
+        <GachaResultCard item={resultItem} onClose={() => setResultItem(null)} />
       )}
     </div>
   );
