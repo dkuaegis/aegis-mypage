@@ -43,7 +43,7 @@ const Home: React.FC = () => {
     return (
         <div>
             <Header leftChild={<img src={aegisLogo} alt="aegis logo" style={{ width: '40px', height: '40px' }} />} title={"마이"}/>
-            <Profile />
+            <Profile mypage={mypage} />
             <div className="point-box">
               <Button
                 text={

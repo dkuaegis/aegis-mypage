@@ -4,7 +4,7 @@ import { checkAuth } from '../api/AuthCheck';
 
 interface AuthContextType {
   isAuthenticated: boolean | null; // null = loading, true = authenticated, false = not authenticated
-  checkAuthStatus: () => Promise<void>;
+  checkAuthStatus: (shouldNavigate?: boolean) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -13,28 +13,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const navigate = useNavigate();
 
-  const checkAuthStatus = async () => {
+  const checkAuthStatus = async (shouldNavigate: boolean = false) => {
     try {
       const authenticated = await checkAuth();
       setIsAuthenticated(authenticated);
       
-      // Handle navigation based on authentication status
-      if (authenticated) {
-        navigate("/");
-      } else {
-        navigate("/login/unauthorized");
+      // 명시적으로 요청된 경우에만 네비게이션 처리
+      if (shouldNavigate) {
+        if (authenticated) {
+          navigate("/");
+        } else {
+          navigate("/login/unauthorized");
+        }
       }
     } catch (error) {
       console.error('인증 확인 실패:', error);
       setIsAuthenticated(false);
-      navigate("/login/auth");
+      if (shouldNavigate) {
+        navigate("/login/auth");
+      }
     }
   };
 
   useEffect(() => {
-    // Only check auth on initial load, not on every render
+    // 초기 로드 시 네비게이션 없이 인증 상태만 확인
     if (isAuthenticated === null) {
-      checkAuthStatus();
+      checkAuthStatus(false);
     }
   }, [isAuthenticated]);
 

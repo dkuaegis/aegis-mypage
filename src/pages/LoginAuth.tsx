@@ -13,7 +13,7 @@ const LoginAuth = () => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('login') === 'success') {
       const verifyAuth = async () => {
-        await checkAuthStatus();
+        await checkAuthStatus(true); // 네비게이션 활성화
       };
 
       verifyAuth();
