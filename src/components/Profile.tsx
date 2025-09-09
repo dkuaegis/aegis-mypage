@@ -9,7 +9,7 @@ import editIcon from "../assets/edit.svg";
 const Profile: React.FC = () => {
     const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);
     const [showProfileEditModal, setShowProfileEditModal] = useState(false);
-    const [selectedKey, setSelectedKey] = useState<IconKey>(ICON_KEYS[0]); // 기본 키
+    const [selectedKey, setSelectedKey] = useState<IconKey>("NONE"); // 기본 키
 
     // API 호출
     useEffect(() => {
@@ -25,7 +25,7 @@ const Profile: React.FC = () => {
     return (
         <div className="Profile">
             <div className="profile_img" style={{ position: 'relative' }}>
-                <img src={PROFILE_ICONS[selectedKey]} alt="profile img" />
+                {mypage && <img src={PROFILE_ICONS[selectedKey]} alt="profile img" />}
                 <img
                     src={editIcon}
                     alt="edit"
