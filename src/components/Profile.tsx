@@ -1,26 +1,24 @@
 import { useState, useEffect } from "react";
-import { getMyPage } from "../api/Mypage";
 import "../style/Profile.css";
 import ProfileEditModal from "./ProfileEditModal";
 import { PROFILE_ICONS, ICON_KEYS } from "../constants/ProfileIcons";
 import type { IconKey } from "../constants/ProfileIcons";
 import editIcon from "../assets/edit.svg";
 
-const Profile: React.FC = () => {
-    const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);
+interface ProfileProps {
+    mypage: { name: string; profileIcon: string; pointBalance: number } | null;
+}
+
+const Profile: React.FC<ProfileProps> = ({ mypage }) => {
     const [showProfileEditModal, setShowProfileEditModal] = useState(false);
     const [selectedKey, setSelectedKey] = useState<IconKey>("NONE"); // 기본 키
 
-    // API 호출
+    // mypage 데이터가 변경될 때 selectedKey 업데이트
     useEffect(() => {
-        (async () => {
-            const data = await getMyPage();
-            setMypage(data);
-            if (data?.profileIcon) {
-                setSelectedKey(data.profileIcon); // 키로 직접 저장
-            }
-          })();
-        }, []);
+        if (mypage?.profileIcon) {
+            setSelectedKey(mypage.profileIcon);
+        }
+    }, [mypage]);
 
     return (
         <div className="Profile">

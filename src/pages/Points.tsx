@@ -18,6 +18,7 @@ const formatDate = (dateStr: string): string => {
 const Points: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [summary, setSummary] = useState<PointSummaryView | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // 포인트 api 호출
   useEffect(() => {
@@ -28,15 +29,26 @@ const Points: React.FC = () => {
       } catch (e) {
         console.error("포인트 조회 실패:", e);
         setSummary({ balance: 0, history: [] });
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, []);
+
+  // 로딩 중일 때는 아무것도 렌더링하지 않음
+  if (isLoading) {
+    return (
+      <div>
+        <Header leftChild="<" title="포인트" />
+      </div>
+    );
+  }
 
   const balance = summary?.balance ?? 0;
   const transactions = summary?.history ?? [];
 
   // 포인트 적립/사용 정렬
-  const filteredData = (summary?.history ?? []).filter((t) => {
+  const filteredData = transactions.filter((t) => {
     if (selectedTab === 1) return t.sign === "+"; // 적립
     if (selectedTab === 2) return t.sign === "-"; // 사용
     return true; // 전체
@@ -45,11 +57,11 @@ const Points: React.FC = () => {
   return (
     <div>
       <Header leftChild="<" title="포인트" />
-           {transactions.length === 0 && balance === 0 ? (
-            <EmptyState type="point" />
-          ) : (
+      {transactions.length === 0 && balance === 0 ? (
+        <EmptyState type="point" />
+      ) : (
         <>
-        <PointSummary point={balance} />
+          <PointSummary point={balance} />
           <TabSelector
             tabs={["전체", "적립", "사용"]}
             selected={selectedTab}
@@ -65,7 +77,7 @@ const Points: React.FC = () => {
                 date={formatDate(item.createdAt)}
                 amount={item.signedAmount}
               />
-          ))}
+            ))}
           </div>
         </>
       )}

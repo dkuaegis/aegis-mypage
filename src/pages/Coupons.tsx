@@ -18,6 +18,7 @@ const Coupons: React.FC = () => {
       status: CouponCardProps["status"];
     }>
   >([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // 쿠폰 API 호출
   useEffect(() => {
@@ -34,9 +35,20 @@ const Coupons: React.FC = () => {
       } catch (e) {
         console.error("쿠폰 조회 실패:", e);
         setCouponItems([]);
+      } finally {
+        setIsLoading(false);
       }
     })();
   }, []);
+
+  // 로딩 중일 때는 아무것도 렌더링하지 않음
+  if (isLoading) {
+    return (
+      <div>
+        <Header leftChild={"<"} title={"쿠폰함"} />
+      </div>
+    );
+  }
 
   // 탭 필터: 0 전체, 1 사용전, 2 사용후
   const filteredData = couponItems.filter((item) => {
@@ -49,8 +61,8 @@ const Coupons: React.FC = () => {
     <div>
       <Header leftChild={"<"} title={"쿠폰함"} />
       {couponItems.length === 0 ? (
-            <EmptyState type="coupon" />
-          ) : (
+        <EmptyState type="coupon" />
+      ) : (
         <>
           <TabSelector
             tabs={["전체", "사용전", "사용후"]}
@@ -66,7 +78,7 @@ const Coupons: React.FC = () => {
                 desc={item.desc}
                 status={item.status}
               />
-          ))}
+            ))}
           </div>
         </>
       )}
