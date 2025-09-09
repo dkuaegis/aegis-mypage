@@ -1,8 +1,28 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import loginImage from "../assets/loginImage.svg";
 import Button from "../components/Button";
+import { useAuth } from "../contexts/AuthContext";
 import "../style/LoginAuth.css";
 
 const LoginAuth = () => {
+  const navigate = useNavigate();
+  const { checkAuthStatus } = useAuth();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('login') === 'success') {
+      const verifyAuth = async () => {
+        await checkAuthStatus();
+      };
+
+      verifyAuth();
+    }
+  }, [navigate, checkAuthStatus]);
+
+  const handleGoogleLogin = () => {
+    window.location.href = "https://dev-api.dkuaegis.org/oauth2/authorization/google";
+  };
 
   return (
     <div className="login-auth-container">
@@ -12,7 +32,7 @@ const LoginAuth = () => {
       <h1 className="login-auth-title">잠깐!<br />먼저 단국대학교<br />구글 계정으로<br />로그인 해주세요</h1>
       <p className="login-auth-desc">처음 방문하신다면, 동아리가입을 먼저 진행해주세요</p>
       <Button text={"동아리가입하기"} type={"SIGNUP"} onClick={() => (window.location.href = "https://join.dkuaegis.org/")} />
-        <Button text={"Google로 로그인"} type={"LOGIN"} onClick={() => (window.location.href = "https://dev-api.dkuaegis.org/oauth2/authorization/google")} /> 
+      <Button text={"Google로 로그인"} type={"LOGIN"} onClick={handleGoogleLogin} /> 
     </div>
   );
 };

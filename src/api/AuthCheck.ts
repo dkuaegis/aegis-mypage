@@ -12,11 +12,11 @@ export async function checkAuth(): Promise<boolean> {
 
     const data = await res.json();
 
-    if (data.status === "PENDING") {
-      console.log("로그인 성공");
+    if (data.status === "COMPLETED") {
+      // console.log("로그인 성공");
       return true;
     } else {
-      console.log("로그인 실패 상태:", data.status);
+      console.log("로그인 실패 상태:", data.status); // PENDING
       return false;
     }
   } catch (err) {

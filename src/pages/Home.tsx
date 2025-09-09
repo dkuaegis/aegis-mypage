@@ -8,6 +8,7 @@ import Profile from "../components/Profile";
 import ActivitySection from "../components/ActivitySection";
 import QRModal from "../components/QRModal";
 import pointImg from '../assets/point.svg';
+import aegisLogo from '../assets/aegisLogo.svg';
 
 const Home: React.FC = () => {
     const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);
@@ -41,7 +42,7 @@ const Home: React.FC = () => {
 
     return (
         <div>
-            <Header leftChild={"<"} title={"마이"} backPath="/login/auth"/>
+            <Header leftChild={<img src={aegisLogo} alt="aegis logo" style={{ width: '40px', height: '40px' }} />} title={"마이"}/>
             <Profile />
             <div className="point-box">
               <Button

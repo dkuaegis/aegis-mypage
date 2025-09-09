@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import Home from './pages/Home';
 import Points from './pages/Points';
 import Coupons from './pages/Coupons';
@@ -10,7 +11,7 @@ import Notfound from './pages/Notfound';
 
 const App: React.FC = () => {
   return (
-    <>
+    <AuthProvider>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/category/points' element={<Points />} />
@@ -21,7 +22,7 @@ const App: React.FC = () => {
         <Route path='/login/unauthorized' element={<UnAuthorized />} />
         <Route path='*' element={<Notfound />} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 };
 
