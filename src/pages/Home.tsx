@@ -12,6 +12,7 @@ import pointImg from '../assets/point.svg';
 
 const Home: React.FC = () => {
     const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const [showQRModal, setShowQRModal] = useState(false);
     const [qrUrl, setQrUrl] = useState<string>('');
@@ -22,6 +23,7 @@ const Home: React.FC = () => {
         try {
           const data = await getMyPage();
           setMypage(data);
+          setIsLoading(false);
         } catch (error) {
           console.error("사용자 정보 조회 실패:", error);
           navigate("/login/auth");
@@ -39,6 +41,10 @@ const Home: React.FC = () => {
         console.error('QR 발급 실패:', e);
       }
     };
+
+    if (isLoading) {
+      return <div></div>;
+    }
 
     return (
         <div>

@@ -11,7 +11,7 @@ interface ProfileProps {
 
 const Profile: React.FC<ProfileProps> = ({ mypage }) => {
     const [showProfileEditModal, setShowProfileEditModal] = useState(false);
-    const [selectedKey, setSelectedKey] = useState<IconKey>("NONE"); // 기본 키
+    const [selectedKey, setSelectedKey] = useState<IconKey>(mypage?.profileIcon || "NONE");
 
     // mypage 데이터가 변경될 때 selectedKey 업데이트
     useEffect(() => {
@@ -23,7 +23,7 @@ const Profile: React.FC<ProfileProps> = ({ mypage }) => {
     return (
         <div className="Profile">
             <div className="profile_img" style={{ position: 'relative' }}>
-                {mypage && <img src={PROFILE_ICONS[selectedKey]} alt="profile img" />}
+                <img src={PROFILE_ICONS[selectedKey]} alt="profile img" />
                 <img
                     src={editIcon}
                     alt="edit"
