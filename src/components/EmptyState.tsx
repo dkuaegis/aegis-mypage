@@ -3,7 +3,11 @@ import cartIcon from "../assets/cart.svg";
 import type { EmptyStateProps } from '../model/EmptyState';
 
 const EmptyState: React.FC<EmptyStateProps> = ({ type }) => {
-  const message = `현재 보유하고 있는 ${type === 'point' ? '포인트가' : '쿠폰이'} 없어요!`;
+  const message = `${
+    type === 'point' ? '현재 보유하고 있는 포인트가' :
+    type === 'coupon' ? '현재 보유하고 있는 쿠폰이' :
+    '현재 존재하는 뽑기내역이'
+  } 없어요!`;
 
   return (
     <div className="empty-state">

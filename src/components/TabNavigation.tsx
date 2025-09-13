@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../style/TabNavigation.css";
 import type { TabNavigationProps } from "../model/TabNavigation";
 
@@ -15,6 +15,18 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
 
   const tabs = customTabs || defaultTabs;
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
+
+  // URL에 따른 활성 탭 설정
+  useEffect(() => {
+    if (!customTabs) {
+      const currentPath = window.location.pathname;
+      if (currentPath.includes("/coupons")) {
+        setActiveTab("coupons");
+      } else if (currentPath.includes("/history")) {
+        setActiveTab("history");
+      }
+    }
+  }, [customTabs]);
 
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);

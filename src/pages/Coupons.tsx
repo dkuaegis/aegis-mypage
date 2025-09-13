@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Header from "../components/Header";
 import TabSelector from "../components/TabSelector";
+import TabNavigation from "../components/TabNavigation";
 import Card from "../components/Card";
 import EmptyState from "../components/EmptyState";
 import { getCoupons } from "../api/Coupons";
@@ -60,6 +61,7 @@ const Coupons: React.FC = () => {
     return (
       <div>
         <Header leftChild={"<"} title={"선물함"} />
+        <TabNavigation />
       </div>
     );
   }
@@ -67,19 +69,20 @@ const Coupons: React.FC = () => {
   // 탭 필터: 0 전체, 1 사용전, 2 사용후
   const filteredData = couponItems.filter((item) => {
     if (selectedTab === 1) return item.status === "사용전";
-    if (selectedTab === 2) return item.status === "사용후";
+    if (selectedTab === 2) return item.status === "사용완료";
     return true; // 전체
   });
 
   return (
     <div>
       <Header leftChild={"<"} title={"선물함"} />
+      <TabNavigation />
       {couponItems.length === 0 ? (
         <EmptyState type="coupon" />
       ) : (
         <>
           <TabSelector
-            tabs={["전체", "사용전", "사용후"]}
+            tabs={["전체", "사용전", "사용완료"]}
             selected={selectedTab}
             onSelect={(tabIndex) => {
               setSelectedTab(tabIndex);

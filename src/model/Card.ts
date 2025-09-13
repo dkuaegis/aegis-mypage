@@ -11,7 +11,7 @@ export interface CouponCardProps {
   type: "coupon";
   price: string;
   desc: string;
-  status: "사용전" | "사용후";
+  status: "사용전" | "사용완료";
 }
 
 // 뽑기내역 카드용 props
