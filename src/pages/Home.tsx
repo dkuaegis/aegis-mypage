@@ -7,7 +7,7 @@ import Button from "../components/Button";
 import Profile from "../components/Profile";
 import ActivitySection from "../components/ActivitySection";
 import QRModal from "../components/QRModal";
-import pointImg from '../assets/point.svg';
+import pointImg from '../assets/point.webp';
 //import aegisLogo from '../assets/aegisLogo.svg';/
 
 const Home: React.FC = () => {

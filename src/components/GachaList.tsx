@@ -1,6 +1,6 @@
-import pointIcon from "../assets/point.svg";
+import pointIcon from "../assets/point.webp";
 import arrowIcon from "../assets/arrow.svg";
-import questionIcon from "../assets/question.svg";
+import questionIcon from "../assets/question.webp";
 import "../style/GachaList.css"
 
 const GachaList: React.FC = () => {

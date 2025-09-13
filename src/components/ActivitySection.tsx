@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import pointshopImg from "../assets/pointShop.svg";
-import rankingImg from "../assets/ranking.svg";
+import pointshopImg from "../assets/pointShop.webp";
+import rankingImg from "../assets/ranking.webp";
 import "../style/ActivitySection.css";
 
 const ActivitySection: React.FC = () => {
