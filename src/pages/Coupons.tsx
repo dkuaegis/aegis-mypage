@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Header from "../components/Header";
 import TabSelector from "../components/TabSelector";
 import Card from "../components/Card";
@@ -9,6 +10,7 @@ import type { CouponCardProps } from "../model/Card";
 const formatPrice = (amount: number): string => `${amount.toLocaleString()}원`;
 
 const Coupons: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedTab, setSelectedTab] = useState(0);
   const [couponItems, setCouponItems] = useState<
     Array<{
@@ -19,6 +21,18 @@ const Coupons: React.FC = () => {
     }>
   >([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // URL 쿼리 파라미터에 따른 초기 탭 설정
+  useEffect(() => {
+    const filter = searchParams.get("filter");
+    if (filter === "unused") {
+      setSelectedTab(1);
+    } else if (filter === "used") {
+      setSelectedTab(2);
+    } else {
+      setSelectedTab(0);
+    }
+  }, [searchParams]);
 
   // 쿠폰 API 호출
   useEffect(() => {
@@ -45,7 +59,7 @@ const Coupons: React.FC = () => {
   if (isLoading) {
     return (
       <div>
-        <Header leftChild={"<"} title={"쿠폰함"} />
+        <Header leftChild={"<"} title={"선물함"} />
       </div>
     );
   }
@@ -59,7 +73,7 @@ const Coupons: React.FC = () => {
 
   return (
     <div>
-      <Header leftChild={"<"} title={"쿠폰함"} />
+      <Header leftChild={"<"} title={"선물함"} />
       {couponItems.length === 0 ? (
         <EmptyState type="coupon" />
       ) : (
@@ -67,7 +81,16 @@ const Coupons: React.FC = () => {
           <TabSelector
             tabs={["전체", "사용전", "사용후"]}
             selected={selectedTab}
-            onSelect={setSelectedTab}
+            onSelect={(tabIndex) => {
+              setSelectedTab(tabIndex);
+              if (tabIndex === 1) {
+                setSearchParams({ filter: "unused" });
+              } else if (tabIndex === 2) {
+                setSearchParams({ filter: "used" });
+              } else {
+                setSearchParams({});
+              }
+            }}
           />
           <div className="coupons-history-list">
             {filteredData.map((item) => (

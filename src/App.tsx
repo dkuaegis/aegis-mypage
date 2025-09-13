@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import Home from './pages/Home';
 import Points from './pages/Points';
 import Coupons from './pages/Coupons';
+import History from './pages/History';
 import PointShop from './pages/PointShop';
 import Ranking from './pages/Ranking';
 import LoginAuth from './pages/LoginAuth';
@@ -15,7 +16,8 @@ const App: React.FC = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/category/points' element={<Points />} />
-        <Route path='/category/coupons' element={<Coupons />} />
+        <Route path='/category/giftbox/coupons' element={<Coupons />} />
+        <Route path='/category/giftbox/history' element={<History />} />
         <Route path='/category/pointshop' element={<PointShop />} />
         <Route path='/category/ranking' element={<Ranking />} />
         <Route path='/login/auth' element={<LoginAuth />} />
