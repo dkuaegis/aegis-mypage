@@ -33,6 +33,7 @@ export default function GachaResultCard({ item, onClose }: GachaResultCardProps)
         <p className="result-desc">포인트 뽑기 결과</p>
         <h3 className="result-title">축하합니다! <br />🎊 {label} 당첨 🎊</h3>
         <div className="result-image-wrapper">{img && <img className="result-image" src={img} alt={label} />}</div>
+        <Button text="선물함으로 이동" type="GACHAHIS" onClick={() => { onClose(); window.location.href = '/category/giftbox/history'; }}/>
         <Button text="확인하기" type="GACHASAVE" onClick={onClose}/>
       </div>
     </div>

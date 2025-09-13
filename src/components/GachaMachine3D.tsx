@@ -211,7 +211,7 @@ function Machine3D({
               cursor: spinning || dropping ? "not-allowed" : "pointer",
             }}
           >
-            {spinning || dropping ? "상품 추첨 중..." : "당첨 뽑기!"}
+            {spinning || dropping ? "상품 추첨 중..." : "뽑기 시작!"}
           </button>
         </Html>
       )}
