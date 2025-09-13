@@ -10,26 +10,20 @@ import { IoHelpCircleOutline } from "react-icons/io5";
 import { useState } from "react";
 import type { CardProps } from "../model/Card";
 
-// 상품명 기반 이미지 매핑 함수
-const getPrizeIcon = (title: string): string => {
-  const titleLower = title.toLowerCase();
-  
-  if (titleLower.includes("컴포즈")) {
-    return composeIcon;
-  }
-  if (titleLower.includes("할인쿠폰")) {
-    return discountCouponIcon;
-  }
-  if (titleLower.includes("스타벅스")) {
-    return starbucksIcon;
-  }
-  if (titleLower.includes("핫식스")) {
-    return hotsixIcon;
-  }
-  if (titleLower.includes("치킨")) {
-    return chickenIcon;
-  }
-  return "";
+const PRIZE_CODE_MAP: Record<string, { name: string; icon: string }> = {
+  "COFFEE_LOW": { name: "컴포즈커피 아메리카노", icon: composeIcon },
+  "CLUB_DUES_DISCOUNT_COUPON": { name: "회비 할인 쿠폰", icon: discountCouponIcon },
+  "COFFEE_HIGH": { name: "스타벅스 1만원권", icon: starbucksIcon },
+  "ENERGY_DRINK": { name: "핫식스", icon: hotsixIcon },
+  "CHICKEN": { name: "치킨 한 마리", icon: chickenIcon },
+};
+
+const getPrizeIcon = (itemCode: string): string => {
+  return PRIZE_CODE_MAP[itemCode]?.icon || "";
+};
+
+const getPrizeName = (itemCode: string): string => {
+  return PRIZE_CODE_MAP[itemCode]?.name || itemCode;
 };
 
 const Card: React.FC<CardProps> = (props) => {
@@ -53,7 +47,7 @@ const Card: React.FC<CardProps> = (props) => {
   }
   // 쿠폰 카드
   if(props.type === "coupon") {
-    const isUsed = props.status === "사용후";
+    const isUsed = props.status === "사용완료";
     return (
       <div className={`card coupon-card${isUsed ? " used" : ""}`}>
         <img src={couponIcon} alt="쿠폰" className="card-icon" />
@@ -68,11 +62,12 @@ const Card: React.FC<CardProps> = (props) => {
   // 뽑기내역 카드
   if(props.type === "history") {
     const prizeIcon = getPrizeIcon(props.title);
+    const prizeName = getPrizeName(props.title);
     return (
       <div className="card history-card">
-        <img src={prizeIcon} alt={props.title} className="card-icon" />
+        <img src={prizeIcon} alt={prizeName} className="card-icon" />
         <div className="card-content">
-          <div className="history-card card-title">{props.title}</div>
+          <div className="history-card card-title">{prizeName}</div>
           <div className="history-card card-date">{props.date}</div>
         </div>
         <div className="help-icon-container">

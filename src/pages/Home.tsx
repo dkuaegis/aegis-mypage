@@ -55,7 +55,7 @@ const Home: React.FC = () => {
                 text={
                   <span className="point-info">
                     <img src={pointImg} alt="포인트" />
-                    <span className="point-text">{mypage?.pointBalance}</span>
+                    <span className="point-text">{mypage?.pointBalance?.toLocaleString()}</span>
                   </span>
                 }
                 type="POINT"
