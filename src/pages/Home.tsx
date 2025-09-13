@@ -48,14 +48,14 @@ const Home: React.FC = () => {
 
     return (
         <div>
-            <Header leftChild={"<"} title={"마이"}/>
-            <Profile mypage={mypage} />
+            <Header leftChild={""} title={""}/>           
+              <Profile mypage={mypage} />
             <div className="point-box">
               <Button
                 text={
                   <span className="point-info">
                     <img src={pointImg} alt="포인트" />
-                    <span className="point-text">{mypage?.pointBalance}</span>
+                    <span className="point-text">{mypage?.pointBalance?.toLocaleString()}</span>
                   </span>
                 }
                 type="POINT"
@@ -63,7 +63,7 @@ const Home: React.FC = () => {
               />
             </div>
             <div className="main-button-group">
-              <Button text={"쿠폰함"} type={"MAIN"} onClick={() => navigate("/category/coupons")} />
+              <Button text={"선물함"} type={"MAIN"} onClick={() => navigate("/category/giftbox/history")} />
               <Button text={"QR코드"} type={"MAIN"} onClick={onClickQR} />
             </div>
             <ActivitySection />

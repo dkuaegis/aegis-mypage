@@ -1,8 +1,9 @@
-import { lazy, useState } from "react";
+import { lazy, useState, useEffect } from "react";
 import type { GachaItem } from "../model/Gacha";
 import GachaList from "../components/GachaList";
 import Header from "../components/Header";
 import Button from "../components/Button";
+import { getMyPage } from "../api/Mypage";
 const GachaMachine3D = lazy(() => import("../components/GachaMachine3D"));
 import "../style/PointShop.css";
 
@@ -16,17 +17,30 @@ const items: GachaItem[] = [
 
 const PointShop: React.FC = () => {
     const [showGacha, setShowGacha] = useState(false);
+    const [userName, setUserName] = useState("");
+
+    // 사용자 이름 가져오기
+    useEffect(() => {
+        (async () => {
+            try {
+                const myPageData = await getMyPage();
+                setUserName(myPageData.name);
+            } catch (error) {
+                console.error("마이페이지 정보 조회 실패:", error);
+            }
+        })();
+    }, []);
 
     return (
         <>
         <Header leftChild={"<"} title={"포인트샵"}/>
         <div className="pointshop-page">
             <p className="gacha-desc">꽝없는 뽑기!</p>
-            <h1 className="gacha-title">임세윤님, 100포인트를<br />뽑기 1회권으로 교환할 수 있어요!</h1>
+            <h1 className="gacha-title">{userName}님, 100포인트를<br />뽑기 1회권으로 교환할 수 있어요!</h1>
             {!showGacha ? (
                 <>
                 <GachaList />
-                <p className="gacha-list-desc">핫식스, 스타벅스 상품권, 치킨 등 <br />복권에서 나온 상품으로 교환 가능해요</p>
+                <p className="gacha-list-desc">핫식스, 스타벅스 상품권, 치킨 등 <br />뽑기에서 나온 상품들은<br />기프티콘으로 교환해드려요</p>
                 <Button text={"교환하기"} type={"EXCHANGE"} onClick={() => setShowGacha(true)} />
             </>
         ) : (

@@ -6,7 +6,7 @@ import GachaResultCard from "./GachaResultCard";
 import type { GachaItem, GachaMachine3DProps } from "../model/Gacha";
 import { useValueAnimator } from "../hooks/useValueAnimator";
 import { easeOutCubic, easeInOutCubic } from "../utils/Easing";
-import { pickIndexByPercent } from "../utils/Gacha";
+import { drawPoint } from "../api/PointDraw";
 
 // 공 (구체)
 function BallMesh({ color = "#FFD54F" }: { color?: string }) {
@@ -53,71 +53,99 @@ function Machine3D({
     if (!spinning && groupRef.current) groupRef.current.rotation.y += dt * 0.2;
   });
 
-  const handleSpin = () => {
+  const handleSpin = async () => {
     if (spinning || dropping || !groupRef.current) return;
-    
-    const idx = pickIndexByPercent(items, it => it.weight);
-    setResultIdx(idx);
+
     setSpinning(true);
 
-    const current = groupRef.current.rotation.y;
-    const turns = 6 + Math.floor(Math.random() * 3); // 6~8바퀴
-    const targetBase = -baseAngles[idx];
-    const target = targetBase + turns * Math.PI * 2;
+    // 1단계: 초기 회전 애니메이션 (API 호출 전)
+    const initialCurrent = groupRef.current.rotation.y;
+    const initialTurns = 6 + Math.random() * 2; // 6~8바퀴
+    const initialTarget = initialCurrent + initialTurns * Math.PI * 2;
 
     startSpinAnim({
-      from: current,
-      to: target,
-      duration: 2200,
+      from: initialCurrent,
+      to: initialTarget,
+      duration: 2000,
       ease: easeOutCubic,
       onUpdate: (v) => {
         if (groupRef.current) groupRef.current.rotation.y = v;
       },
-      onComplete: () => {
-        setSpinning(false);
-        startDrop(idx);
+      onComplete: async () => {
+        try {
+          // 2단계: API 호출
+          const result = await drawPoint();
+
+          // API 코드를 상품명으로 변환
+          const ITEM_CODE_MAP: Record<string, string> = {
+            "COFFEE_LOW": "컴포즈커피 아메리카노",
+            "CLUB_DUES_DISCOUNT_COUPON": "회비 할인 쿠폰",
+            "COFFEE_HIGH": "스타벅스 1만원권",
+            "ENERGY_DRINK": "핫식스",
+            "CHICKEN": "치킨 한 마리",
+          };
+
+          const itemName = ITEM_CODE_MAP[result.item] || result.item;
+          console.log('API result:', result.item, '-> mapped to:', itemName);
+
+          // 결과에서 아이템 찾기
+          const idx = items.findIndex(item => item.label === itemName);
+          const targetIdx = idx >= 0 ? idx : null; // 못 찾으면 null
+
+          console.log('Found item at index:', targetIdx, 'item:', targetIdx !== null ? items[targetIdx] : 'not found');
+
+          setResultIdx(targetIdx);
+          setSpinning(false);
+
+          if (targetIdx !== null) {
+            startDrop(targetIdx, itemName);
+          } else {
+            // 매칭되는 아이템이 없으면 바로 결과 표시
+            const resultItem = { id: 'api-result', label: itemName };
+            onShowResult(resultItem);
+            onResult?.(resultItem);
+          }
+        } catch (error) {
+          console.error('뽑기 실패:', error);
+          setSpinning(false);
+          // 에러 처리는 drawPoint 함수에서 alert로 처리됨
+        }
       },
     });
   };
 
-  const startDrop = (idx: number) => {
+  const startDrop = (idx: number, apiItemName: string) => {
     setDropping(true);
 
-    const startPos = new THREE.Vector3(0, ringY + 0.1, ringRadius * 0.9);
-    const endPos = new THREE.Vector3(0, -0.85, 0.7);
-    const control = new THREE.Vector3(0.15, -0.2, 0.85);
-
-    const color = items[idx].color ?? "#FFD54F";
+    // 선택된 아이템의 색상 적용
+    const color = items[idx]?.color || "#000000";
     if (chosenRef.current) {
       (chosenRef.current.material as THREE.MeshStandardMaterial).color.set(color);
     }
 
-    const getBezier = (t: number) => {
-      const inv = 1 - t;
-      return new THREE.Vector3(
-        inv * inv * startPos.x + 2 * inv * t * control.x + t * t * endPos.x,
-        inv * inv * startPos.y + 2 * inv * t * control.y + t * t * endPos.y,
-        inv * inv * startPos.z + 2 * inv * t * control.z + t * t * endPos.z
-      );
-    };
-
     startDropAnim({
       from: 0,
       to: 1,
-      duration: 900,
+      duration: 800,
       ease: easeInOutCubic,
       onUpdate: (t) => {
-        const p = getBezier(t);
         if (chosenRef.current) {
-          chosenRef.current.position.set(p.x, p.y, p.z);
-          chosenRef.current.rotation.x = THREE.MathUtils.lerp(0, Math.PI * 2, t);
+          // 간단한 포물선 경로
+          const x = t * 0.3;
+          const y = ringY + 0.1 - t * 1.0 - t * t * 0.5; // 포물선 형태로 떨어짐
+          const z = ringRadius * 0.9 + t * 0.4;
+
+          chosenRef.current.position.set(x, y, z);
+          chosenRef.current.rotation.x = THREE.MathUtils.lerp(0, Math.PI * 4, t);
+          chosenRef.current.rotation.z = Math.sin(t * Math.PI * 6) * 0.3;
         }
       },
       onComplete: () => {
         setDropping(false);
-        const item = items[idx];
-        onShowResult(item);
-        onResult?.(item);
+        // API에서 받은 아이템명을 사용
+        const resultItem = { id: 'api-result', label: apiItemName };
+        onShowResult(resultItem);
+        onResult?.(resultItem);
       },
     });
   };
@@ -211,7 +239,7 @@ function Machine3D({
               cursor: spinning || dropping ? "not-allowed" : "pointer",
             }}
           >
-            {spinning || dropping ? "상품 추첨 중..." : "당첨 뽑기!"}
+            {spinning || dropping ? "상품 추첨 중..." : "뽑기 시작!"}
           </button>
         </Html>
       )}
@@ -235,11 +263,11 @@ export default function GachaMachine3D({
     items.length > 0
       ? items
       : [
-          { id: "1", label: "핫식스", weight: 61 },
-          { id: "2", label: "컴포즈커피", weight: 32 },
-          { id: "3", label: "회비 할인 쿠폰", weight: 5.5 },
-          { id: "4", label: "스타벅스 1만원권", weight: 1.0 },
-          { id: "5", label: "치킨", weight: 0.5 },
+          { id: "1", label: "핫식스", weight: 61, color: "#74B8FF" },
+          { id: "2", label: "컴포즈커피 아메리카노", weight: 32, color: "#FF5975" },
+          { id: "3", label: "회비 할인 쿠폰", weight: 5.5, color: "#C2B5FB" },
+          { id: "4", label: "스타벅스 1만원권", weight: 1.0, color: "#CEF286" },
+          { id: "5", label: "치킨 한 마리", weight: 0.5, color: "#FDF385" },
         ];
 
   const [resultItem, setResultItem] = useState<GachaItem | null>(null);

@@ -100,4 +100,59 @@
 .card-coupon-status.used {
     background: #626262;
     color: #FFFFFF;
+}
+
+/* 뽑기내역 카드 */
+.history-card .card-content {
+    flex: 1;
+}
+
+.history-card .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.history-card .card-date {
+    font-size: 10px;
+    font-weight: 500;
+    color: #7E7E7E;
+}
+
+/* 도움말 아이콘 */
+.help-icon-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.help-icon {
+    color: #7E7E7E;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.tooltip {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: #626262;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 12px;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #626262 transparent transparent transparent;
 } 

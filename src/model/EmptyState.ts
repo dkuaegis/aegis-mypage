@@ -1,3 +1,3 @@
 export interface EmptyStateProps {
-  type: 'point' | 'coupon';
+  type: 'point' | 'coupon' | 'history';
 }

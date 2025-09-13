@@ -11,7 +11,14 @@ export interface CouponCardProps {
   type: "coupon";
   price: string;
   desc: string;
-  status: "사용전" | "사용후";
+  status: "사용전" | "사용완료";
 }
 
-export type CardProps = PointCardProps | CouponCardProps; 
+// 뽑기내역 카드용 props
+export interface HistoryCardProps {
+  type: "history";
+  title: string;
+  date: string;
+}
+
+export type CardProps = PointCardProps | CouponCardProps | HistoryCardProps; 
