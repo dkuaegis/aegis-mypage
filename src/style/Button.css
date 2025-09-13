@@ -52,26 +52,23 @@
 .Button_BACKHOME {
     background-color: #000000; 
     color: #FFFFFF;   
-    width: 270px;
-    height: 65px;
-    border-radius: 25px;
+    width: 320px;
+    height: 50px;
+    margin-top: 40px;
 }
 
 .Button_SIGNUP {
-    background-color: #FFFFFF; 
+    background-color: #DBDBDB; 
     color: #000000;   
-    width: 203px;
-    height: 65px;
-    border-radius: 25px;
-    margin-bottom: 20px;
+    width: 320px;
+    height: 50px;
 }
 
 .Button_LOGIN {
     background-color: #000000; 
     color: #FFFFFF;   
-    width: 203px;
-    height: 65px;
-    border-radius: 25px;
+    width: 320px;
+    height: 50px;
 }
 
 .Button_ACTIVITY {
@@ -173,4 +170,13 @@
     align-items: center;
     justify-content: center;
     margin: 0 auto 10px;
+}
+
+.button-group-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
 }
