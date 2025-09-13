@@ -39,10 +39,10 @@ const PointShop: React.FC = () => {
             <h1 className="gacha-title">{userName}님, 100포인트를<br />뽑기 1회권으로 교환할 수 있어요!</h1>
             {!showGacha ? (
                 <>
-                <GachaList />
-                <p className="gacha-list-desc">핫식스, 스타벅스 상품권, 치킨 등 <br />뽑기에서 나온 상품들은<br />기프티콘으로 교환해드려요</p>
-                <Button text={"교환하기"} type={"EXCHANGE"} onClick={() => setShowGacha(true)} />
-            </>
+                    <GachaList />
+                    <p className="gacha-list-desc">핫식스, 스타벅스 상품권, 치킨 등 <br />뽑기에서 나온 상품들은<br />기프티콘으로 교환해드려요</p>
+                    <Button text={"교환하기"} type={"EXCHANGE"} onClick={() => setShowGacha(true)} />
+                </>
         ) : (
                 <div className="gacha-container">
                 <GachaMachine3D
