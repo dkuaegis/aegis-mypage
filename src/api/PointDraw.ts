@@ -1,4 +1,5 @@
 import type { DrawResponse } from "../model/Draw";
+import { showError } from "../utils/alert";
 const API_BASE_URL = 'https://dev-api.dkuaegis.org';
 
 export async function drawPoint(): Promise<DrawResponse> {
@@ -14,7 +15,7 @@ export async function drawPoint(): Promise<DrawResponse> {
 
     if (!res.ok) {
       if (res.status === 400) {
-        alert('잔액이 부족합니다.');
+        showError('잔액이 부족합니다.');
         throw new Error('잔액 부족');
       }
       throw new Error(`HTTP ${res.status} ${res.statusText}`);

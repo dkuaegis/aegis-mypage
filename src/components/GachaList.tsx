@@ -1,4 +1,4 @@
-import pointIcon from "../assets/point.webp";
+import pointIcon from "../assets/point.svg";
 import arrowIcon from "../assets/arrow.svg";
 import questionIcon from "../assets/question.webp";
 import "../style/GachaList.css"

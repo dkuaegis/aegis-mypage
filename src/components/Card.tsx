@@ -1,5 +1,5 @@
 import "../style/Card.css";
-import coinIcon from "../assets/point.webp";
+import coinIcon from "../assets/point.svg";
 import couponIcon from "../assets/coupon.svg";
 import composeIcon from "../assets/prizes/compose.svg";
 import discountCouponIcon from "../assets/prizes/discountcoupon.svg";
