@@ -1,8 +1,7 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import type { RankingInfoProps, RankingListItemData, MyRankCardProps } from "../model/Ranking";
 import { PROFILE_ICONS } from "../constants/ProfileIcons";
 import NoneIcon from "../../public/NONE.svg"
-
-const API_BASE_URL = "https://dev-api.dkuaegis.org";
 
 export async function getRankingData(): Promise<{
   info: RankingInfoProps;

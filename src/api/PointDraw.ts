@@ -1,6 +1,6 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import type { DrawResponse } from "../model/Draw";
 import { showError } from "../utils/alert";
-const API_BASE_URL = 'https://dev-api.dkuaegis.org';
 
 export async function drawPoint(): Promise<DrawResponse> {
   try {
