@@ -1,3 +1,4 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import loginImage from "../assets/loginImage.webp";
@@ -21,7 +22,7 @@ const LoginAuth = () => {
   }, [navigate, checkAuthStatus]);
 
   const handleGoogleLogin = () => {
-    window.location.href = "https://dev-api.dkuaegis.org/oauth2/authorization/google";
+    window.location.href = `${API_BASE_URL}/oauth2/authorization/google`;
   };
 
   return (
