@@ -1,5 +1,5 @@
-import type { Coupons } from "../model/Coupons";
 const API_BASE_URL = 'https://dev-api.dkuaegis.org';
+import type { Coupons } from "../model/Coupons";
 
 export async function getCoupons(): Promise<Coupons[]> {
   try {

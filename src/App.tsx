@@ -1,4 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './contexts/AuthContext';
 import Home from './pages/Home';
 import Points from './pages/Points';
@@ -24,6 +26,7 @@ const App: React.FC = () => {
         <Route path='/login/unauthorized' element={<UnAuthorized />} />
         <Route path='*' element={<Notfound />} />
       </Routes>
+      <ToastContainer />
     </AuthProvider>
   );
 };

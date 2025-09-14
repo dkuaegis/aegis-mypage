@@ -1,5 +1,5 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import type { DrawHistoryItem } from "../model/DrawMe";
-const API_BASE_URL = "https://dev-api.dkuaegis.org";
 
 export async function getMyDrawHistory(): Promise<DrawHistoryItem[]> {
   try {

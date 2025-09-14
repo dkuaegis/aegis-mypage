@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import loginImage from "../assets/loginImage.svg";
+import loginImage from "../assets/loginImage.webp";
 import Button from "../components/Button";
 import { useAuth } from "../contexts/AuthContext";
 import "../style/LoginAuth.css";

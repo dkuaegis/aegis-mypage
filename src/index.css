@@ -29,6 +29,31 @@ body * {
   font-family: "SUIT Variable";
 }
 
+/* Toast 스타일 커스터마이징 */
+.Toastify__toast--error {
+  background-color: #FF4444 !important;
+  color: #FFFFFF !important;
+  font-family: "SUIT Variable" !important;
+  font-weight: 500 !important;
+  max-width: 300px !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.Toastify__toast--success {
+  background-color: #00AA44 !important;
+  color: #FFFFFF !important;
+  font-family: "SUIT Variable" !important;
+  font-weight: 500 !important;
+  max-width: 300px !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.Toastify__close-button {
+  color: #FFFFFF !important;
+}
+
 /* 모바일 반응형 */
 @media (max-width: 480px) {
   html, body {

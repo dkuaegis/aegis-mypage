@@ -1,6 +1,5 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import type { PointSummaryView, PointTransactionView, RawPointSummaryRes, RawPointTransaction } from "../model/Points";
-
-const API_BASE_URL = 'https://dev-api.dkuaegis.org';
 
 type ApiResp<T> = { data: T } | T;
 
