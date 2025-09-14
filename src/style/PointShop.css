@@ -5,15 +5,6 @@
   padding: 24px 20px;
 }
 
-.gacha-desc {
-    font-size: 16px;
-    font-weight: 600;
-    color: #7E7E7E;
-    align-self: flex-start;
-    text-align: left;
-    margin: 0 0 8px 12px;
-}
-
 .gacha-title {
     font-size: 20px;
     font-weight: 700;
@@ -23,11 +14,20 @@
     margin: 0 0 50px 12px;
 }
 
+.gacha-desc {
+    font-size: 16px;
+    font-weight: 600;
+    color: #7E7E7E;
+    align-self: flex-start;
+    text-align: left;
+    margin: 0 0 8px 12px;
+}
+
 .gacha-list-desc {
     font-size: 16px;
     font-weight: 600;
     color: #7E7E7E;
-    margin: 80px 0 24px 0;
+    margin: 24px 0 50px 0;
     text-align: center;
 }
 

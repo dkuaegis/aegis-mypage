@@ -124,8 +124,7 @@
     width: 320px;
     height: 50px;
     color: #FFFFFF;
-    position: fixed;
-    bottom: 40px;
+    margin: 24px 0 24px 0;
 }
 
 .Button_GACHASAVE {
