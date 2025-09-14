@@ -58,24 +58,24 @@ function Machine3D({
 
     setSpinning(true);
 
-    // 1단계: 초기 회전 애니메이션 (API 호출 전)
-    const initialCurrent = groupRef.current.rotation.y;
-    const initialTurns = 6 + Math.random() * 2; // 6~8바퀴
-    const initialTarget = initialCurrent + initialTurns * Math.PI * 2;
+    try {
+      // API 호출을 먼저 실행 (잔액 확인)
+      const result = await drawPoint();
 
-    startSpinAnim({
-      from: initialCurrent,
-      to: initialTarget,
-      duration: 2000,
-      ease: easeOutCubic,
-      onUpdate: (v) => {
-        if (groupRef.current) groupRef.current.rotation.y = v;
-      },
-      onComplete: async () => {
-        try {
-          // 2단계: API 호출
-          const result = await drawPoint();
+      // API 호출이 성공하면 회전 애니메이션 시작
+      const initialCurrent = groupRef.current.rotation.y;
+      const initialTurns = 6 + Math.random() * 2; // 6~8바퀴
+      const initialTarget = initialCurrent + initialTurns * Math.PI * 2;
 
+      startSpinAnim({
+        from: initialCurrent,
+        to: initialTarget,
+        duration: 2000,
+        ease: easeOutCubic,
+        onUpdate: (v) => {
+          if (groupRef.current) groupRef.current.rotation.y = v;
+        },
+        onComplete: () => {
           // API 코드를 상품명으로 변환
           const ITEM_CODE_MAP: Record<string, string> = {
             "COFFEE_LOW": "컴포즈커피 아메리카노",
@@ -105,13 +105,13 @@ function Machine3D({
             onShowResult(resultItem);
             onResult?.(resultItem);
           }
-        } catch (error) {
-          console.error('뽑기 실패:', error);
-          setSpinning(false);
-          // 에러 처리는 drawPoint 함수에서 alert로 처리됨
-        }
-      },
-    });
+        },
+      });
+    } catch (error) {
+      console.error('뽑기 실패:', error);
+      setSpinning(false);
+      // 에러 처리는 drawPoint 함수에서 처리
+    }
   };
 
   const startDrop = (idx: number, apiItemName: string) => {
@@ -239,7 +239,7 @@ function Machine3D({
               cursor: spinning || dropping ? "not-allowed" : "pointer",
             }}
           >
-            {spinning || dropping ? "상품 추첨 중..." : "뽑기 시작!"}
+            {spinning || dropping ? "추첨 중..." : "뽑기 시작!"}
           </button>
         </Html>
       )}
