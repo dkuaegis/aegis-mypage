@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://dev-api.dkuaegis.org";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import type { MyPageInfo } from "../model/MyPageInfo";
 
 export async function getMyPage(): Promise<MyPageInfo> {

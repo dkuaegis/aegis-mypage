@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://dev-api.dkuaegis.org';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import type { Coupons } from "../model/Coupons";
 
 export async function getCoupons(): Promise<Coupons[]> {
