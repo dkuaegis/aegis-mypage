@@ -44,7 +44,7 @@ const Coupons: React.FC = () => {
           id: c.issuedCouponId,
           price: formatPrice(c.discountAmount),
           desc: c.couponName,
-          status: (c.isValid ? "사용전" : "사용후") as CouponCardProps["status"],
+          status: (c.isValid ? "사용전" : "사용완료") as CouponCardProps["status"],
         }));
         setCouponItems(mapped);
       } catch (e) {

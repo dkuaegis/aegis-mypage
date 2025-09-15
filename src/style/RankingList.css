@@ -1,14 +1,6 @@
 .ranking-list-container {
   width: 600px;
   max-width: 100%;
-  max-height: 70vh;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  -webkit-overflow-scrolling: touch;
-}
-.ranking-list-container::-webkit-scrollbar {
-  display: none;
 }
 
 .ranking-item {
