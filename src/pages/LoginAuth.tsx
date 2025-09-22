@@ -25,16 +25,36 @@ const LoginAuth = () => {
     // 브라우저 호환성을 위한 OAuth 리다이렉트 처리
     const oauthUrl = `${API_BASE_URL}/oauth2/authorization/google`;
 
-    // 현재 URL을 state 파라미터로 전달하여 리다이렉트 후 돌아올 수 있도록 설정
+    // 네이버 브라우저 등 특수 브라우저를 위한 추가 파라미터
     const currentUrl = encodeURIComponent(window.location.origin);
-    const finalUrl = `${oauthUrl}?redirect_uri=${currentUrl}`;
+    const userAgent = encodeURIComponent(navigator.userAgent);
+    const finalUrl = `${oauthUrl}?redirect_uri=${currentUrl}&user_agent=${userAgent}`;
 
-    try {
-      // 모든 브라우저에서 안전한 리다이렉트
-      window.location.assign(finalUrl);
-    } catch {
-      // 혹시 assign이 실패하면 href로 대체
-      window.location.href = finalUrl;
+    // 브라우저별 특수 처리
+    const isNaverBrowser = navigator.userAgent.includes('NAVER') || navigator.userAgent.includes('Whale');
+    const isFirefox = navigator.userAgent.includes('Firefox');
+
+    if (isNaverBrowser) {
+      // 네이버 브라우저의 경우 새 탭에서 열기
+      const popup = window.open(finalUrl, '_blank', 'width=500,height=600,scrollbars=yes,resizable=yes');
+
+      // 팝업이 닫혔을 때 페이지 새로고침으로 로그인 상태 확인
+      const checkClosed = setInterval(() => {
+        if (popup?.closed) {
+          clearInterval(checkClosed);
+          window.location.reload();
+        }
+      }, 1000);
+    } else if (isFirefox) {
+      // Firefox의 경우 직접 리다이렉트하되 추가 헤더 설정
+      window.location.replace(finalUrl);
+    } else {
+      // 일반 브라우저 처리
+      try {
+        window.location.assign(finalUrl);
+      } catch {
+        window.location.href = finalUrl;
+      }
     }
   };
 
