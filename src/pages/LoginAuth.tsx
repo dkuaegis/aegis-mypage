@@ -22,7 +22,20 @@ const LoginAuth = () => {
   }, [navigate, checkAuthStatus]);
 
   const handleGoogleLogin = () => {
-    window.location.href = `${API_BASE_URL}/oauth2/authorization/google`;
+    // 브라우저 호환성을 위한 OAuth 리다이렉트 처리
+    const oauthUrl = `${API_BASE_URL}/oauth2/authorization/google`;
+
+    // 현재 URL을 state 파라미터로 전달하여 리다이렉트 후 돌아올 수 있도록 설정
+    const currentUrl = encodeURIComponent(window.location.origin);
+    const finalUrl = `${oauthUrl}?redirect_uri=${currentUrl}`;
+
+    try {
+      // 모든 브라우저에서 안전한 리다이렉트
+      window.location.assign(finalUrl);
+    } catch {
+      // 혹시 assign이 실패하면 href로 대체
+      window.location.href = finalUrl;
+    }
   };
 
   return (

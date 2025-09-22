@@ -6,9 +6,18 @@ export async function checkAuth(): Promise<boolean> {
       method: 'GET',
       credentials: 'include',
       headers: {
-        accept: 'application/json',
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        // 브라우저 호환성을 위한 추가 헤더
+        'X-Requested-With': 'XMLHttpRequest',
       },
     });
+
+    // 응답 상태 코드 확인
+    if (!res.ok) {
+      console.log(`인증 확인 실패: ${res.status} ${res.statusText}`);
+      return false;
+    }
 
     const data = await res.json();
 
