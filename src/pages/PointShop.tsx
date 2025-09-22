@@ -40,7 +40,7 @@ const PointShop: React.FC = () => {
             {!showGacha ? (
                 <>
                     <GachaList />
-                    <p className="gacha-list-desc">핫식스, 스타벅스 상품권, 치킨 등 <br />뽑기에서 나온 상품들은<br />기프티콘으로 교환해드려요</p>
+                    <p className="gacha-list-desc">뽑기에서 나온 상품들 중<br />핫식스는 동아리방(우리은행 건물 혜당관 530호)에서,<br />커피 쿠폰, 치킨 등은 기프티콘으로 교환해드려요</p>
                     <Button text={"교환하기"} type={"EXCHANGE"} onClick={() => setShowGacha(true)} />
                 </>
         ) : (

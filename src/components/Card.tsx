@@ -79,7 +79,10 @@ const Card: React.FC<CardProps> = (props) => {
           />
           {showTooltip && (
             <div className="tooltip">
-              상품은 관리자가 기프티콘으로 익일 일괄로 지급할 예정입니다!
+              {props.title === "ENERGY_DRINK"
+                ? "동아리방(우리은행 건물 혜당관 530호)에서 수령가능해요!"
+                : "일주일에 한 번씩 기프티콘으로 일괄 지급해드립니다!"
+              }
             </div>
           )}
         </div>
