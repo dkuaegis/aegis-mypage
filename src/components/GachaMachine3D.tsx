@@ -7,6 +7,8 @@ import type { GachaItem, GachaMachine3DProps } from "../model/Gacha";
 import { useValueAnimator } from "../hooks/useValueAnimator";
 import { easeOutCubic, easeInOutCubic } from "../utils/Easing";
 import { drawPoint } from "../api/PointDraw";
+import { getMyPage } from "../api/Mypage";
+import { showError } from "../utils/alert";
 
 // 공 (구체)
 function BallMesh({ color = "#FFD54F" }: { color?: string }) {
@@ -59,7 +61,16 @@ function Machine3D({
     setSpinning(true);
 
     try {
-      // API 호출을 먼저 실행 (잔액 확인)
+      // 먼저 마이페이지 정보를 가져와서 잔액 확인
+      const myPageInfo = await getMyPage();
+
+      if (myPageInfo.pointBalance < 100) {
+        showError('잔액이 부족합니다.');
+        setSpinning(false);
+        return;
+      }
+
+      // 잔액이 충분하면 뽑기 API 호출
       const result = await drawPoint();
 
       // API 호출이 성공하면 회전 애니메이션 시작
