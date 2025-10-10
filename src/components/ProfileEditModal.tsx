@@ -85,7 +85,7 @@ return (
     <div className="profile-modal-overlay">
       <div className="profile-modal">
         <h2 className="profile-title">
-          {mypage?.name},<br />프로필 이미지를 꾸며보세요
+          {mypage?.name}님,<br />프로필 이미지를 꾸며보세요
         </h2>
         <img src={PROFILE_ICONS[tempKey]} alt="profile-img" className="profile-current-img" />
         <div
