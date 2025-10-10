@@ -6,7 +6,7 @@ import NoneIcon from "../../public/NONE.svg"
 export async function getRankingData(): Promise<{
   info: RankingInfoProps;
   top10: RankingListItemData[];
-  me: MyRankCardProps;
+  me: MyRankCardProps | null;
 }> {
   const res = await fetch(`${API_BASE_URL}/points/ranking`, {
     method: "GET",
@@ -47,11 +47,13 @@ export async function getRankingData(): Promise<{
       score: u.totalEarnedPoints,
       avatar: u.profileIcon ? PROFILE_ICONS[u.profileIcon] : NoneIcon,
     })),
-    me: {
-      rank: json.me.rank,
-      name: json.me.name,
-      score: json.me.totalEarnedPoints,
-      avatar: json.me.profileIcon ? PROFILE_ICONS[json.me.profileIcon] : "",
-    },
+    me: json.me
+      ? {
+          rank: json.me.rank,
+          name: json.me.name,
+          score: json.me.totalEarnedPoints,
+          avatar: json.me.profileIcon ? PROFILE_ICONS[json.me.profileIcon] : NoneIcon,
+        }
+      : null,
   };
 }
