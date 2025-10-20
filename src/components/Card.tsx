@@ -81,8 +81,9 @@ const Card: React.FC<CardProps> = (props) => {
             <div className="tooltip">
               {props.title === "ENERGY_DRINK"
                 ? "동아리방(우리은행 건물 혜당관 530호)에서 수령가능해요!"
-                : "일주일에 한 번씩 기프티콘으로 일괄 지급해드립니다!"
-              }
+                : props.title === "CLUB_DUES_DISCOUNT_COUPON"
+                ? "지급받은 쿠폰은 다음 학기 등록에 사용할 수 있습니다!"
+                : "일주일에 한 번씩 기프티콘으로 일괄 지급해드립니다!"}
             </div>
           )}
         </div>
