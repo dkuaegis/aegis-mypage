@@ -11,6 +11,7 @@ import Ranking from './pages/Ranking';
 import LoginAuth from './pages/LoginAuth';
 import UnAuthorized from './pages/UnAuthorized';
 import Notfound from './pages/Notfound';
+import BrowserRedirectPage from './pages/BrowserRedirectPage';
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: React.FC = () => {
         <Route path='/category/pointshop' element={<PointShop />} />
         <Route path='/category/ranking' element={<Ranking />} />
         <Route path='/login/auth' element={<LoginAuth />} />
+        <Route path='/login/redirect' element={<BrowserRedirectPage />} />
         <Route path='/login/unauthorized' element={<UnAuthorized />} />
         <Route path='*' element={<Notfound />} />
       </Routes>
