@@ -1,13 +1,14 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 import type { Coupons } from "../model/Coupons";
 
 export async function getCoupons(): Promise<Coupons[]> {
   try {
     const res = await fetch(`${API_BASE_URL}/coupons/me`, {
-      method: 'GET',
-      credentials: 'include',  // 세션 쿠키를 전송
+      method: "GET",
+      credentials: "include", // 세션 쿠키를 전송
       headers: {
-        accept: 'application/json'
+        accept: "application/json",
       },
     });
 
@@ -16,9 +17,9 @@ export async function getCoupons(): Promise<Coupons[]> {
     }
 
     const data: Coupons[] = await res.json();
-    return data;  // { issuedCouponId, couponName, discountAmount, isValid }
+    return data; // { issuedCouponId, couponName, discountAmount, isValid }
   } catch (e) {
-    console.error('발급된 쿠폰 조회 실패:', e);
+    console.error("발급된 쿠폰 조회 실패:", e);
     throw e;
   }
 }

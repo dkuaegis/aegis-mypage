@@ -1,21 +1,24 @@
 import "../style/Card.css";
-import coinIcon from "../assets/point.svg";
+import { useState } from "react";
+import { IoHelpCircleOutline } from "react-icons/io5";
 import couponIcon from "../assets/coupon.svg";
+import coinIcon from "../assets/point.svg";
+import chickenIcon from "../assets/prizes/chicken.svg";
 import composeIcon from "../assets/prizes/compose.svg";
 import discountCouponIcon from "../assets/prizes/discountcoupon.svg";
-import starbucksIcon from "../assets/prizes/starbucks.svg";
 import hotsixIcon from "../assets/prizes/hotsix.svg";
-import chickenIcon from "../assets/prizes/chicken.svg";
-import { IoHelpCircleOutline } from "react-icons/io5";
-import { useState } from "react";
+import starbucksIcon from "../assets/prizes/starbucks.svg";
 import type { CardProps } from "../model/Card";
 
 const PRIZE_CODE_MAP: Record<string, { name: string; icon: string }> = {
-  "COFFEE_LOW": { name: "컴포즈커피 아메리카노", icon: composeIcon },
-  "CLUB_DUES_DISCOUNT_COUPON": { name: "회비 할인 쿠폰", icon: discountCouponIcon },
-  "COFFEE_HIGH": { name: "스타벅스 1만원권", icon: starbucksIcon },
-  "ENERGY_DRINK": { name: "핫식스", icon: hotsixIcon },
-  "CHICKEN": { name: "치킨 한 마리", icon: chickenIcon },
+  COFFEE_LOW: { name: "컴포즈커피 아메리카노", icon: composeIcon },
+  CLUB_DUES_DISCOUNT_COUPON: {
+    name: "회비 할인 쿠폰",
+    icon: discountCouponIcon,
+  },
+  COFFEE_HIGH: { name: "스타벅스 1만원권", icon: starbucksIcon },
+  ENERGY_DRINK: { name: "핫식스", icon: hotsixIcon },
+  CHICKEN: { name: "치킨 한 마리", icon: chickenIcon },
 };
 
 const getPrizeIcon = (itemCode: string): string => {
@@ -40,13 +43,14 @@ const Card: React.FC<CardProps> = (props) => {
           <div className="card-date">{props.date}</div>
         </div>
         <div className={`card-amount ${isPlus ? "plus" : "minus"}`}>
-          {isPlus ? "+" : "-"}{Math.abs(props.amount).toLocaleString()}점
+          {isPlus ? "+" : "-"}
+          {Math.abs(props.amount).toLocaleString()}점
         </div>
       </div>
     );
   }
   // 쿠폰 카드
-  if(props.type === "coupon") {
+  if (props.type === "coupon") {
     const isUsed = props.status === "사용완료";
     return (
       <div className={`card coupon-card${isUsed ? " used" : ""}`}>
@@ -55,12 +59,14 @@ const Card: React.FC<CardProps> = (props) => {
           <div className="card-title">{props.price}</div>
           <div className="card-desc">{props.desc}</div>
         </div>
-        <div className={`card-coupon-status${isUsed ? " used" : ""}`}>{props.status}</div>
+        <div className={`card-coupon-status${isUsed ? " used" : ""}`}>
+          {props.status}
+        </div>
       </div>
     );
   }
   // 뽑기내역 카드
-  if(props.type === "history") {
+  if (props.type === "history") {
     const prizeIcon = getPrizeIcon(props.title);
     const prizeName = getPrizeName(props.title);
     return (
@@ -82,8 +88,8 @@ const Card: React.FC<CardProps> = (props) => {
               {props.title === "ENERGY_DRINK"
                 ? "동아리방(우리은행 건물 혜당관 530호)에서 수령가능해요!"
                 : props.title === "CLUB_DUES_DISCOUNT_COUPON"
-                ? "지급받은 쿠폰은 다음 학기 등록에 사용할 수 있습니다!"
-                : "일주일에 한 번씩 기프티콘으로 일괄 지급해드립니다!"}
+                  ? "지급받은 쿠폰은 다음 학기 등록에 사용할 수 있습니다!"
+                  : "일주일에 한 번씩 기프티콘으로 일괄 지급해드립니다!"}
             </div>
           )}
         </div>

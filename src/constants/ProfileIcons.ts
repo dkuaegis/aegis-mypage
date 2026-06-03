@@ -3,15 +3,15 @@ import CPP from "../../public/CPP.svg";
 import CSHARP from "../../public/CSHARP.svg";
 import DART from "../../public/DART.svg";
 import GOLANG from "../../public/GOLANG.svg";
-import JS from "../../public/JS.svg";
 import JAVA from "../../public/JAVA.svg";
+import JS from "../../public/JS.svg";
 import KOTLIN from "../../public/KOTLIN.svg";
+import NONE from "../../public/NONE.svg";
 import PHP from "../../public/PHP.svg";
 import PYTHON from "../../public/PYTHON.svg";
 import RUBY from "../../public/RUBY.svg";
 import RUST from "../../public/RUST.svg";
 import SWIFT from "../../public/SWIFT.svg";
-import NONE from "../../public/NONE.svg";
 
 export const PROFILE_ICONS: Record<string, string> = {
   C,

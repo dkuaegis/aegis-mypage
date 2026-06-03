@@ -3,13 +3,13 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export async function checkAuth(): Promise<boolean> {
   try {
     const res = await fetch(`${API_BASE_URL}/auth/check`, {
-      method: 'GET',
-      credentials: 'include',
+      method: "GET",
+      credentials: "include",
       headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
+        accept: "application/json",
+        "Content-Type": "application/json",
         // 브라우저 호환성을 위한 추가 헤더
-        'X-Requested-With': 'XMLHttpRequest',
+        "X-Requested-With": "XMLHttpRequest",
       },
     });
 

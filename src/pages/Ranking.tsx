@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
+import { getRankingData } from "../api/Ranking";
 import Header from "../components/Header";
+import MyRankCard from "../components/MyRankCard";
 import RankingInfo from "../components/RankingInfo";
 import RankingList from "../components/RankingList";
-import MyRankCard from "../components/MyRankCard";
-import { getRankingData } from "../api/Ranking";
-import type { RankingInfoProps, RankingListItemData, MyRankCardProps } from "../model/Ranking";
+import type {
+  MyRankCardProps,
+  RankingInfoProps,
+  RankingListItemData,
+} from "../model/Ranking";
 
 const Ranking: React.FC = () => {
   const [info, setInfo] = useState<RankingInfoProps>({ totalParticipants: 0 });

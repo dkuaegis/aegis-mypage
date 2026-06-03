@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../style/TabNavigation.css";
 import type { TabNavigationProps } from "../model/TabNavigation";
 
 const TabNavigation: React.FC<TabNavigationProps> = ({
   tabs: customTabs,
   onTabChange,
-  defaultTab
+  defaultTab,
 }) => {
   // 기본 탭 설정 (선물함용)
   const defaultTabs = [
     { id: "history", label: "뽑기내역" },
-    { id: "coupons", label: "쿠폰" }
+    { id: "coupons", label: "쿠폰" },
   ];
 
   const tabs = customTabs || defaultTabs;
@@ -48,6 +48,7 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
       <div className="tab-list">
         {tabs.map((tab) => (
           <button
+            type="button"
             key={tab.id}
             className={`tab-item ${activeTab === tab.id ? "active" : ""}`}
             onClick={() => handleTabClick(tab.id)}
@@ -60,11 +61,11 @@ const TabNavigation: React.FC<TabNavigationProps> = ({
         <div
           className="tab-indicator"
           style={{
-            transform: `translateX(${tabs.findIndex(tab => tab.id === activeTab) * 100}%)`,
-            width: `${100 / tabs.length}%`
+            transform: `translateX(${tabs.findIndex((tab) => tab.id === activeTab) * 100}%)`,
+            width: `${100 / tabs.length}%`,
           }}
         />
-        </div>
+      </div>
     </div>
   );
 };

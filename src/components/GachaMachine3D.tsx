@@ -1,14 +1,14 @@
+import { Environment, Html, OrbitControls } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, OrbitControls, Html } from "@react-three/drei";
-import GachaResultCard from "./GachaResultCard";
-import type { GachaItem, GachaMachine3DProps } from "../model/Gacha";
-import { useValueAnimator } from "../hooks/useValueAnimator";
-import { easeOutCubic, easeInOutCubic } from "../utils/Easing";
-import { drawPoint } from "../api/PointDraw";
 import { getMyPage } from "../api/Mypage";
+import { drawPoint } from "../api/PointDraw";
+import { useValueAnimator } from "../hooks/useValueAnimator";
+import type { GachaItem, GachaMachine3DProps } from "../model/Gacha";
 import { showError } from "../utils/alert";
+import { easeInOutCubic, easeOutCubic } from "../utils/Easing";
+import GachaResultCard from "./GachaResultCard";
 
 // 공 (구체)
 function BallMesh({ color = "#FFD54F" }: { color?: string }) {
@@ -44,7 +44,7 @@ function Machine3D({
   const step = (Math.PI * 2) / items.length;
   const baseAngles = useMemo(
     () => items.map((_, i) => i * step),
-    [items.length, step]
+    [items, step]
   );
 
   const { start: startSpinAnim } = useValueAnimator();
@@ -65,7 +65,7 @@ function Machine3D({
       const myPageInfo = await getMyPage();
 
       if (myPageInfo.pointBalance < 100) {
-        showError('잔액이 부족합니다.');
+        showError("잔액이 부족합니다.");
         setSpinning(false);
         return;
       }
@@ -89,21 +89,26 @@ function Machine3D({
         onComplete: () => {
           // API 코드를 상품명으로 변환
           const ITEM_CODE_MAP: Record<string, string> = {
-            "COFFEE_LOW": "컴포즈커피 아메리카노",
-            "CLUB_DUES_DISCOUNT_COUPON": "회비 할인 쿠폰",
-            "COFFEE_HIGH": "스타벅스 1만원권",
-            "ENERGY_DRINK": "핫식스",
-            "CHICKEN": "치킨 한 마리",
+            COFFEE_LOW: "컴포즈커피 아메리카노",
+            CLUB_DUES_DISCOUNT_COUPON: "회비 할인 쿠폰",
+            COFFEE_HIGH: "스타벅스 1만원권",
+            ENERGY_DRINK: "핫식스",
+            CHICKEN: "치킨 한 마리",
           };
 
           const itemName = ITEM_CODE_MAP[result.item] || result.item;
-          console.log('API result:', result.item, '-> mapped to:', itemName);
+          console.log("API result:", result.item, "-> mapped to:", itemName);
 
           // 결과에서 아이템 찾기
-          const idx = items.findIndex(item => item.label === itemName);
+          const idx = items.findIndex((item) => item.label === itemName);
           const targetIdx = idx >= 0 ? idx : null; // 못 찾으면 null
 
-          console.log('Found item at index:', targetIdx, 'item:', targetIdx !== null ? items[targetIdx] : 'not found');
+          console.log(
+            "Found item at index:",
+            targetIdx,
+            "item:",
+            targetIdx !== null ? items[targetIdx] : "not found"
+          );
 
           setResultIdx(targetIdx);
           setSpinning(false);
@@ -112,14 +117,14 @@ function Machine3D({
             startDrop(targetIdx, itemName);
           } else {
             // 매칭되는 아이템이 없으면 바로 결과 표시
-            const resultItem = { id: 'api-result', label: itemName };
+            const resultItem = { id: "api-result", label: itemName };
             onShowResult(resultItem);
             onResult?.(resultItem);
           }
         },
       });
     } catch (error) {
-      console.error('뽑기 실패:', error);
+      console.error("뽑기 실패:", error);
       setSpinning(false);
       // 에러 처리는 drawPoint 함수에서 처리
     }
@@ -131,7 +136,9 @@ function Machine3D({
     // 선택된 아이템의 색상 적용
     const color = items[idx]?.color || "#000000";
     if (chosenRef.current) {
-      (chosenRef.current.material as THREE.MeshStandardMaterial).color.set(color);
+      (chosenRef.current.material as THREE.MeshStandardMaterial).color.set(
+        color
+      );
     }
 
     startDropAnim({
@@ -147,14 +154,18 @@ function Machine3D({
           const z = ringRadius * 0.9 + t * 0.4;
 
           chosenRef.current.position.set(x, y, z);
-          chosenRef.current.rotation.x = THREE.MathUtils.lerp(0, Math.PI * 4, t);
+          chosenRef.current.rotation.x = THREE.MathUtils.lerp(
+            0,
+            Math.PI * 4,
+            t
+          );
           chosenRef.current.rotation.z = Math.sin(t * Math.PI * 6) * 0.3;
         }
       },
       onComplete: () => {
         setDropping(false);
         // API에서 받은 아이템명을 사용
-        const resultItem = { id: 'api-result', label: apiItemName };
+        const resultItem = { id: "api-result", label: apiItemName };
         onShowResult(resultItem);
         onResult?.(resultItem);
       },
@@ -237,6 +248,7 @@ function Machine3D({
       {!isOverlayOpen && (
         <Html position={[0, -1.4, 0]} center>
           <button
+            type="button"
             onClick={handleSpin}
             disabled={spinning || dropping}
             style={{
@@ -275,7 +287,12 @@ export default function GachaMachine3D({
       ? items
       : [
           { id: "1", label: "핫식스", weight: 61, color: "#74B8FF" },
-          { id: "2", label: "컴포즈커피 아메리카노", weight: 32, color: "#FF5975" },
+          {
+            id: "2",
+            label: "컴포즈커피 아메리카노",
+            weight: 32,
+            color: "#FF5975",
+          },
           { id: "3", label: "회비 할인 쿠폰", weight: 5.5, color: "#C2B5FB" },
           { id: "4", label: "스타벅스 1만원권", weight: 1.0, color: "#CEF286" },
           { id: "5", label: "치킨 한 마리", weight: 0.5, color: "#FDF385" },
@@ -298,7 +315,10 @@ export default function GachaMachine3D({
 
       {/* 결과 카드 */}
       {resultItem && (
-        <GachaResultCard item={resultItem} onClose={() => setResultItem(null)} />
+        <GachaResultCard
+          item={resultItem}
+          onClose={() => setResultItem(null)}
+        />
       )}
     </div>
   );

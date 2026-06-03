@@ -1,5 +1,5 @@
-import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { useRef } from "react";
 import * as THREE from "three";
 
 export type AnimatorOptions = {
@@ -21,7 +21,7 @@ export function useValueAnimator() {
 
   useFrame(() => {
     const a = animRef.current;
-    if (!a || !a.active) return;
+    if (!a?.active) return;
 
     const t = (performance.now() - a.start) / a.duration;
     const clamped = Math.min(1, Math.max(0, t));

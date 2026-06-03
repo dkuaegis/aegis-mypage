@@ -21,4 +21,4 @@ export interface HistoryCardProps {
   date: string;
 }
 
-export type CardProps = PointCardProps | CouponCardProps | HistoryCardProps; 
+export type CardProps = PointCardProps | CouponCardProps | HistoryCardProps;

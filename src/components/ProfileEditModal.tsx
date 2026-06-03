@@ -1,12 +1,13 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { ProfileEditModalProps } from "../model/ProfileEditModal";
-import { PROFILE_ICONS } from "../constants/ProfileIcons";
 import type { IconKey } from "../constants/ProfileIcons";
+import { PROFILE_ICONS } from "../constants/ProfileIcons";
+import type { ProfileEditModalProps } from "../model/ProfileEditModal";
 import Button from "./Button";
 import "../style/ProfileEditModal.css";
-import { ProfileEdit } from "../api/ProfileEdit";
 import { getMyPage } from "../api/Mypage";
+import { ProfileEdit } from "../api/ProfileEdit";
+
 // import { toIconId } from "../utils/Icon";
 
 const IMAGES_PER_PAGE = 8;
@@ -19,7 +20,11 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   onClose,
 }) => {
   const [tempKey, setTempKey] = useState<IconKey>(selectedKey);
-  const [mypage, setMypage] = useState<{ name: string; profileIcon: string; pointBalance: number } | null>(null);
+  const [mypage, setMypage] = useState<{
+    name: string;
+    profileIcon: string;
+    pointBalance: number;
+  } | null>(null);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
   const gridRef = useRef<HTMLDivElement>(null);
@@ -33,12 +38,16 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   const pages = Array.from({ length: totalPages }, (_, i) =>
     imageKeys.slice(i * IMAGES_PER_PAGE, (i + 1) * IMAGES_PER_PAGE)
   );
+  const pageIndexes = Array.from({ length: totalPages }, (_, i) => ({
+    id: `profile-page-dot-${i + 1}`,
+    index: i,
+  }));
 
   const handleSave = async () => {
-   try {
-      await ProfileEdit(tempKey);     
-      onSelectKey(tempKey);         
-      onClose();                
+    try {
+      await ProfileEdit(tempKey);
+      onSelectKey(tempKey);
+      onClose();
     } catch (e) {
       console.error("프로필 아이콘 저장 실패:", e);
     }
@@ -46,20 +55,20 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
 
   // 사용자 정보 조회 API 호출
   useEffect(() => {
-      (async () => {
-        try {
-          const data = await getMyPage();
-          setMypage(data);
-        } catch (error) {
-          console.error("사용자 정보 조회 실패:", error);
-          navigate("/login/auth");
-        }
-      })();
-    }, [navigate]);
+    (async () => {
+      try {
+        const data = await getMyPage();
+        setMypage(data);
+      } catch (error) {
+        console.error("사용자 정보 조회 실패:", error);
+        navigate("/login/auth");
+      }
+    })();
+  }, [navigate]);
 
-    useEffect(() => {
-      const el = gridRef.current;
-      if (!el) return;
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
 
     const onScroll = () => {
       const idx = Math.round(el.scrollLeft / PAGE_WIDTH);
@@ -81,42 +90,45 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
     setCurrentPage(idx);
   };
 
-return (
+  return (
     <div className="profile-modal-overlay">
       <div className="profile-modal">
         <h2 className="profile-title">
-          {mypage?.name}님,<br />프로필 이미지를 꾸며보세요
+          {mypage?.name}님,
+          <br />
+          프로필 이미지를 꾸며보세요
         </h2>
-        <img src={PROFILE_ICONS[tempKey]} alt="profile-img" className="profile-current-img" />
-        <div
-          className="image-grid"
-          ref={gridRef}
-          aria-label="프로필 이미지 페이지 목록"
-        >
-          {pages.map((keys, pageIdx) => (
-            <div className="image-page" key={pageIdx} aria-label={`페이지 ${pageIdx + 1}`}>
+        <img
+          src={PROFILE_ICONS[tempKey]}
+          alt="profile-img"
+          className="profile-current-img"
+        />
+        <div className="image-grid" ref={gridRef}>
+          {pages.map((keys) => (
+            <div className="image-page" key={keys.join("-")}>
               {keys.map((key) => (
-                <img
+                <button
                   key={key}
-                  src={PROFILE_ICONS[key]}
-                  alt={key}
                   className={`profile-option-img ${tempKey === key ? "selected" : ""}`}
                   onClick={() => setTempKey(key)}
-                />
+                  type="button"
+                >
+                  <img src={PROFILE_ICONS[key]} alt={key} />
+                </button>
               ))}
             </div>
           ))}
         </div>
         <div className="pager" role="tablist" aria-label="페이지 인디케이터">
-          {Array.from({ length: totalPages }).map((_, i) => (
+          {pageIndexes.map((page) => (
             <button
-              key={i}
+              key={page.id}
               type="button"
-              className={`pager-dot ${i === currentPage ? "active" : ""}`}
-              onClick={() => scrollToPage(i)}
+              className={`pager-dot ${page.index === currentPage ? "active" : ""}`}
+              onClick={() => scrollToPage(page.index)}
               role="tab"
-              aria-selected={i === currentPage}
-              aria-label={`페이지 ${i + 1}로 이동`}
+              aria-selected={page.index === currentPage}
+              aria-label={`페이지 ${page.index + 1}로 이동`}
             />
           ))}
         </div>

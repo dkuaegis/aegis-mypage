@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getPointSummary } from "../api/Points";
-import type { PointSummaryView } from "../model/Points";
+import Card from "../components/Card";
+import EmptyState from "../components/EmptyState";
 import Header from "../components/Header";
 import PointSummary from "../components/PointSummary";
 import TabSelector from "../components/TabSelector";
-import Card from "../components/Card";
-import EmptyState from "../components/EmptyState";
+import type { PointSummaryView } from "../model/Points";
 
 const formatDate = (dateStr: string): string => {
   const d = new Date(dateStr);
   const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
   return `${year}년 ${month}월 ${day}일`;
 };
 

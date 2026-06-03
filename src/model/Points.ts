@@ -1,4 +1,4 @@
-export type PointType = 'EARN' | 'SPEND';
+export type PointType = "EARN" | "SPEND";
 
 export interface RawPointTransaction {
   pointTransactionId: number;
@@ -14,8 +14,8 @@ export interface RawPointSummaryRes {
 }
 
 export interface PointTransactionView extends RawPointTransaction {
-  sign: '+' | '-';
-  label: '적립' | '사용';
+  sign: "+" | "-";
+  label: "적립" | "사용";
   signedAmount: number;
 }
 

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../components/Button";
 import pointshopImg from "../assets/pointShop.webp";
 import rankingImg from "../assets/ranking.webp";
+import Button from "../components/Button";
 import "../style/ActivitySection.css";
 
 const ActivitySection: React.FC = () => {
@@ -14,7 +14,11 @@ const ActivitySection: React.FC = () => {
         <Button
           text={
             <span className="activity-btn-content">
-              <img src={pointshopImg} alt="포인트샵" className="activity-icon" />
+              <img
+                src={pointshopImg}
+                alt="포인트샵"
+                className="activity-icon"
+              />
               <span>포인트샵</span>
             </span>
           }

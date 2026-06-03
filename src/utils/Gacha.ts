@@ -10,7 +10,8 @@ export function pickIndexByPercent<T>(
   let total = 0;
   for (let i = 0; i < n; i++) {
     const raw = getPercent(list[i]);
-    const v = typeof raw === "number" && isFinite(raw) && raw > 0 ? raw : 0;
+    const v =
+      typeof raw === "number" && Number.isFinite(raw) && raw > 0 ? raw : 0;
     pct[i] = v;
     total += v;
   }

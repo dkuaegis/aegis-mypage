@@ -1,5 +1,5 @@
-import type { RankingListProps } from '../model/Ranking';
-import '../style/RankingList.css';
+import type { RankingListProps } from "../model/Ranking";
+import "../style/RankingList.css";
 
 const RankingList: React.FC<RankingListProps> = ({ items }) => {
   const getRankIndicator = (rank: number) => {

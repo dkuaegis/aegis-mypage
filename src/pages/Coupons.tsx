@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import Header from "../components/Header";
-import TabSelector from "../components/TabSelector";
-import TabNavigation from "../components/TabNavigation";
+import { getCoupons } from "../api/Coupons";
 import Card from "../components/Card";
 import EmptyState from "../components/EmptyState";
-import { getCoupons } from "../api/Coupons";
+import Header from "../components/Header";
+import TabNavigation from "../components/TabNavigation";
+import TabSelector from "../components/TabSelector";
 import type { CouponCardProps } from "../model/Card";
 
 const formatPrice = (amount: number): string => `${amount.toLocaleString()}원`;
@@ -44,7 +44,9 @@ const Coupons: React.FC = () => {
           id: c.issuedCouponId,
           price: formatPrice(c.discountAmount),
           desc: c.couponName,
-          status: (c.isValid ? "사용전" : "사용완료") as CouponCardProps["status"],
+          status: (c.isValid
+            ? "사용전"
+            : "사용완료") as CouponCardProps["status"],
         }));
         setCouponItems(mapped);
       } catch (e) {

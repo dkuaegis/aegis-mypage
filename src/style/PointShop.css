@@ -6,31 +6,31 @@
 }
 
 .gacha-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: #000000;
-    align-self: flex-start;
-    text-align: left;
-    margin: 0 0 50px 12px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #000000;
+  align-self: flex-start;
+  text-align: left;
+  margin: 0 0 50px 12px;
 }
 
 .gacha-desc {
-    font-size: 16px;
-    font-weight: 600;
-    color: #7E7E7E;
-    align-self: flex-start;
-    text-align: left;
-    margin: 0 0 8px 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #7e7e7e;
+  align-self: flex-start;
+  text-align: left;
+  margin: 0 0 8px 12px;
 }
 
 .gacha-list-desc {
-    font-size: 16px;
-    font-weight: 600;
-    color: #7E7E7E;
-    margin: 24px 0 50px 0;
-    text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #7e7e7e;
+  margin: 24px 0 50px 0;
+  text-align: center;
 }
 
 .gacha-container {
-    margin-top: -40px;
+  margin-top: -40px;
 }

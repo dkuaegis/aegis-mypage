@@ -8,8 +8,9 @@ const TabSelector = ({ tabs, selected, onSelect }: TabSelectorProps) => {
     <div className="tab-selector">
       {tabs.map((tab, idx) => (
         <button
+          type="button"
           key={tab}
-          className={`tab-btn${selected === idx ? ' selected' : ''}${hovered === idx && selected !== idx ? ' hovered' : ''}`}
+          className={`tab-btn${selected === idx ? " selected" : ""}${hovered === idx && selected !== idx ? " hovered" : ""}`}
           onClick={() => onSelect(idx)}
           onMouseEnter={() => setHovered(idx)}
           onMouseLeave={() => setHovered(null)}

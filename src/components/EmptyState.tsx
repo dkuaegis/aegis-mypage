@@ -1,12 +1,14 @@
-import '../style/EmptyState.css';
+import "../style/EmptyState.css";
 import cartIcon from "../assets/cart.webp";
-import type { EmptyStateProps } from '../model/EmptyState';
+import type { EmptyStateProps } from "../model/EmptyState";
 
 const EmptyState: React.FC<EmptyStateProps> = ({ type }) => {
   const message = `${
-    type === 'point' ? '현재 보유하고 있는 포인트가' :
-    type === 'coupon' ? '현재 보유하고 있는 쿠폰이' :
-    '현재 존재하는 뽑기내역이'
+    type === "point"
+      ? "현재 보유하고 있는 포인트가"
+      : type === "coupon"
+        ? "현재 보유하고 있는 쿠폰이"
+        : "현재 존재하는 뽑기내역이"
   } 없어요!`;
 
   return (
@@ -17,4 +19,4 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type }) => {
   );
 };
 
-export default EmptyState; 
+export default EmptyState;

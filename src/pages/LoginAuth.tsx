@@ -1,4 +1,5 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import loginImage from "../assets/loginImage.webp";
@@ -15,12 +16,12 @@ const LoginAuth = () => {
   useEffect(() => {
     // 인앱 브라우저 체크 후 리디렉션
     if (isInAppBrowser) {
-      navigate('/login/redirect');
+      navigate("/login/redirect");
       return;
     }
 
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('login') === 'success') {
+    if (urlParams.get("login") === "success") {
       const verifyAuth = async () => {
         await checkAuthStatus(true); // 네비게이션 활성화
       };
@@ -39,12 +40,18 @@ const LoginAuth = () => {
     const finalUrl = `${oauthUrl}?redirect_uri=${currentUrl}&user_agent=${userAgent}`;
 
     // 브라우저별 특수 처리
-    const isNaverBrowser = navigator.userAgent.includes('NAVER') || navigator.userAgent.includes('Whale');
-    const isFirefox = navigator.userAgent.includes('Firefox');
+    const isNaverBrowser =
+      navigator.userAgent.includes("NAVER") ||
+      navigator.userAgent.includes("Whale");
+    const isFirefox = navigator.userAgent.includes("Firefox");
 
     if (isNaverBrowser) {
       // 네이버 브라우저의 경우 새 탭에서 열기
-      const popup = window.open(finalUrl, '_blank', 'width=500,height=600,scrollbars=yes,resizable=yes');
+      const popup = window.open(
+        finalUrl,
+        "_blank",
+        "width=500,height=600,scrollbars=yes,resizable=yes"
+      );
 
       // 팝업이 닫혔을 때 페이지 새로고침으로 로그인 상태 확인
       const checkClosed = setInterval(() => {
@@ -71,11 +78,29 @@ const LoginAuth = () => {
       <div className="login-auth-image">
         <img src={loginImage} alt="login lock" />
       </div>
-      <h1 className="login-auth-title">잠깐!<br />먼저 단국대학교<br />구글 계정으로<br />로그인 해주세요</h1>
-      <p className="login-auth-desc">처음 방문하신다면, 동아리가입을 먼저 진행해주세요</p>
+      <h1 className="login-auth-title">
+        잠깐!
+        <br />
+        먼저 단국대학교
+        <br />
+        구글 계정으로
+        <br />
+        로그인 해주세요
+      </h1>
+      <p className="login-auth-desc">
+        처음 방문하신다면, 동아리가입을 먼저 진행해주세요
+      </p>
       <div className="button-group-section">
-        <Button text={"동아리가입하기"} type={"SIGNUP"} onClick={() => (window.location.href = "https://join.dkuaegis.org/")} />
-        <Button text={"Google로 로그인"} type={"LOGIN"} onClick={handleGoogleLogin} /> 
+        <Button
+          text={"동아리가입하기"}
+          type={"SIGNUP"}
+          onClick={() => (window.location.href = "https://join.dkuaegis.org/")}
+        />
+        <Button
+          text={"Google로 로그인"}
+          type={"LOGIN"}
+          onClick={handleGoogleLogin}
+        />
       </div>
     </div>
   );

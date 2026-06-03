@@ -1,8 +1,8 @@
 export type GachaItem = {
   id: string;
   label: string;
-  color?: string;   // 공 색
-  weight?: number;  // 확률 가중치
+  color?: string; // 공 색
+  weight?: number; // 확률 가중치
   imageSrc?: string; // 상품 이미지
 };
 
@@ -13,7 +13,7 @@ export interface GachaMachine3DProps {
   height?: number | string;
   className?: string;
   modelScale?: number;
-};
+}
 
 export interface Machine3DProps {
   items: GachaItem[];

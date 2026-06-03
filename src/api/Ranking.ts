@@ -1,7 +1,12 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-import type { RankingInfoProps, RankingListItemData, MyRankCardProps } from "../model/Ranking";
+
+import NoneIcon from "../../public/NONE.svg";
 import { PROFILE_ICONS } from "../constants/ProfileIcons";
-import NoneIcon from "../../public/NONE.svg"
+import type {
+  MyRankCardProps,
+  RankingInfoProps,
+  RankingListItemData,
+} from "../model/Ranking";
 
 export async function getRankingData(): Promise<{
   info: RankingInfoProps;
@@ -11,8 +16,8 @@ export async function getRankingData(): Promise<{
   const res = await fetch(`${API_BASE_URL}/points/ranking`, {
     method: "GET",
     credentials: "include", // 세션 쿠키 전송
-    headers: { 
-        accept: 'application/json', 
+    headers: {
+      accept: "application/json",
     },
   });
 
@@ -52,7 +57,9 @@ export async function getRankingData(): Promise<{
           rank: json.me.rank,
           name: json.me.name,
           score: json.me.totalEarnedPoints,
-          avatar: json.me.profileIcon ? PROFILE_ICONS[json.me.profileIcon] : NoneIcon,
+          avatar: json.me.profileIcon
+            ? PROFILE_ICONS[json.me.profileIcon]
+            : NoneIcon,
         }
       : null,
   };

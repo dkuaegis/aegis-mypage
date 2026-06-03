@@ -1,5 +1,5 @@
-import type { RankingInfoProps } from '../model/Ranking';
-import '../style/RankingInfo.css';
+import type { RankingInfoProps } from "../model/Ranking";
+import "../style/RankingInfo.css";
 
 const RankingInfo: React.FC<RankingInfoProps> = ({ totalParticipants }) => {
   return (

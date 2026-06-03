@@ -11,9 +11,9 @@ const Header: React.FC<HeaderProps> = ({ title, leftChild, backPath }) => {
 
   return (
     <header className="Header">
-      <div className="header_left" onClick={handleBack}>
+      <button type="button" className="header_left" onClick={handleBack}>
         {leftChild}
-      </div>
+      </button>
       <div className="header_center">{title}</div>
     </header>
   );

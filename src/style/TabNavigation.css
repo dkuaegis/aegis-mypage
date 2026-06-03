@@ -1,11 +1,11 @@
 .tab-navigation {
   width: 85%;
-  background: #F2F3F8;
+  background: #f2f3f8;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-bottom: 2px solid #E5E5E5;
+  border-bottom: 2px solid #e5e5e5;
   margin: 0 auto;
 }
 
@@ -23,7 +23,7 @@
   border: none;
   font-size: 16px;
   font-weight: 700;
-  color: #7E7E7E;
+  color: #7e7e7e;
   text-align: center;
   cursor: pointer;
   transition: color 0.2s ease;
@@ -43,6 +43,6 @@
 .tab-indicator {
   align-items: center;
   height: 100%;
-  background: #F2F3F8;
+  background: #f2f3f8;
   transition: transform 0.3s ease;
 }
